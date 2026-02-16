@@ -1,0 +1,849 @@
+/* Category.css - Beautiful, Elegant, Perfectly Spaced */
+.category-container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 2.5rem 3.5rem;
+    display: flex;
+    gap: 4rem;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #1a1e24;
+    background: white;
+    min-height: 100vh;
+}
+
+/* ========== LEFT SIDEBAR - ELEGANT ========== */
+.section-sidebar {
+    flex: 0 0 280px;
+    position: sticky;
+    top: 6rem;
+    align-self: flex-start;
+    height: calc(100vh - 8rem);
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-header {
+    margin-bottom: 2rem;
+}
+
+.brand-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #001e3c;
+    letter-spacing: -0.5px;
+    margin: 0 0 0.5rem 0;
+}
+
+.brand-underline {
+    width: 40px;
+    height: 3px;
+    background: #38a9a3;
+    border-radius: 2px;
+}
+
+.sidebar-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7a8c;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+.sidebar-nav {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 0.5rem;
+    border-radius: 16px;
+    color: #4b6a7c;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    position: relative;
+}
+
+.nav-icon-wrapper {
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.nav-item i {
+    font-size: 1rem;
+    color: #6b7a8c;
+}
+
+.nav-item:hover {
+    background: #f5f7fa;
+    color: #1e3b4a;
+}
+
+.nav-item.active {
+    background: #e8f1f0;
+    color: #38a9a3;
+    font-weight: 600;
+    box-shadow: 0 6px 12px rgba(56, 169, 163, 0.08);
+}
+
+.nav-item.active i {
+    color: #38a9a3;
+}
+
+.nav-active-indicator {
+    margin-left: auto;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.nav-active-indicator i {
+    font-size: 0.75rem;
+    color: #38a9a3 !important;
+}
+
+.sidebar-decoration {
+    margin-top: auto;
+    padding: 1.5rem 0;
+    border-top: 1px solid #edf2f7;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.decoration-icon {
+    width: 48px;
+    height: 48px;
+    background: #f5fafc;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.decoration-icon i {
+    font-size: 1.5rem;
+    color: #38a9a3;
+}
+
+.nav-icon-img {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+}
+
+.section-icon-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+}
+
+.decoration-text p {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1e3b4a;
+    margin: 0 0 0.2rem 0;
+}
+
+.decoration-text span {
+    font-size: 0.75rem;
+    color: #6b7a8c;
+}
+
+/* ========== MAIN CONTENT - ELEGANT SPACING ========== */
+.main-content-full {
+    flex: 1;
+    width: 100%;
+    max-width: calc(100% - 280px - 4rem);
+}
+
+/* Hero Section */
+.hero-section-elegant {
+    margin-bottom: 3rem;
+}
+
+.hero-badge {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #38a9a3;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 1rem;
+}
+
+.hero-title-elegant {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #001e3c;
+    margin-bottom: 1.25rem;
+    line-height: 1.2;
+}
+
+.hero-divider {
+    width: 60px;
+    height: 4px;
+    background: #38a9a3;
+    border-radius: 2px;
+    margin-bottom: 1.5rem;
+}
+
+.hero-text-elegant p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: #4b6a7c;
+    max-width: 800px;
+}
+
+/* Market Map - Elegant Card */
+.market-map-elegant {
+    margin-bottom: 3.5rem;
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+}
+
+.market-map-header {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+}
+
+.market-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    background: #e8f1f0;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.market-icon-wrapper i {
+    font-size: 1.75rem;
+    color: #38a9a3;
+}
+
+.market-title-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.market-subtitle {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #6b7a8c;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.25rem;
+}
+
+.market-title-wrapper h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #001e3c;
+    margin: 0;
+}
+
+.market-stats-elegant {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+}
+
+.market-stat-card-elegant {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.market-stat-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #001e3c;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+}
+
+.market-stat-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #6b7a8c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.15rem;
+}
+
+.market-stat-desc {
+    font-size: 0.7rem;
+    color: #94a3b8;
+}
+
+.market-stat-divider {
+    width: 1px;
+    height: 40px;
+    background: #e2e8f0;
+    margin: 0 1.5rem;
+}
+
+.market-map-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #edf2f7;
+}
+
+.market-map-footer i {
+    color: #38a9a3;
+    font-size: 0.85rem;
+}
+
+.market-map-footer p {
+    font-size: 0.85rem;
+    color: #6b7a8c;
+    margin: 0;
+}
+
+/* Section Detail - Elegant */
+.section-detail-elegant {
+    margin-bottom: 4rem;
+    padding-top: 1rem;
+}
+
+.section-header-elegant {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 1.75rem;
+}
+
+.section-title-elegant {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.section-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.section-icon-wrapper i {
+    font-size: 1.75rem;
+}
+
+.title-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.section-tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.25rem;
+}
+
+.title-wrapper h3 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #001e3c;
+    margin: 0;
+}
+
+.section-badge-elegant {
+    padding: 0.5rem 1.25rem;
+    border-radius: 40px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+.section-stat-elegant {
+    margin-bottom: 1.75rem;
+}
+
+.stat-highlight-elegant {
+    background: #f8fafc;
+    padding: 1.5rem 1.75rem;
+    border-radius: 20px;
+    border-left: 4px solid;
+}
+
+.stat-number {
+    display: block;
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #001e3c;
+    margin-bottom: 0.25rem;
+}
+
+.stat-description-elegant {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #4b6a7c;
+    margin: 0;
+}
+
+.section-description-elegant p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #4b6a7c;
+    margin-bottom: 2rem;
+}
+
+/* Two Column Layout */
+.content-two-column-elegant {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+}
+
+.column-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.header-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.header-icon i {
+    font-size: 1rem;
+}
+
+.column-header h4 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #001e3c;
+    margin: 0;
+}
+
+.steps-list-elegant {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.steps-list-elegant li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+    color: #4b6a7c;
+    line-height: 1.5;
+}
+
+.steps-list-elegant li i {
+    font-size: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.steps-list-elegant li span {
+    flex: 1;
+}
+
+.resource-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.resource-card {
+    background: white;
+    border: 1px solid #edf2f7;
+    padding: 0.6rem 1.25rem;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    color: #4b6a7c;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: all 0.2s;
+}
+
+.resource-card:hover {
+    background: #38a9a3;
+    border-color: #38a9a3;
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(56, 169, 163, 0.12);
+}
+
+.resource-card i {
+    font-size: 0.75rem;
+}
+
+.action-link-elegant {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    color: #38a9a3;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 0.75rem 0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.arrow-circle {
+    width: 32px;
+    height: 32px;
+    background: #e8f1f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.action-link-elegant:hover .arrow-circle {
+    background: #38a9a3;
+    transform: translateX(6px);
+}
+
+.action-link-elegant:hover .arrow-circle i {
+    color: white;
+}
+
+/* Available Houses - Elegant Grid */
+.available-houses-elegant {
+    margin-bottom: 3.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #edf2f7;
+}
+
+.view-all-elegant {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #38a9a3;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 40px;
+    transition: all 0.2s;
+}
+
+.view-all-elegant:hover {
+    background: #e8f1f0;
+    gap: 1rem;
+}
+
+.houses-grid-elegant {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.house-card-elegant {
+    background: white;
+    border-radius: 20px;
+    border: 1px solid #edf2f7;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.house-card-elegant:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.06);
+    border-color: #38a9a3;
+}
+
+.house-image-wrapper {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+}
+
+.house-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.house-card-elegant:hover .house-image {
+    transform: scale(1.08);
+}
+
+.house-badge {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: rgba(0, 30, 60, 0.85);
+    color: white;
+    padding: 0.25rem 0.9rem;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+}
+
+.house-content {
+    padding: 1.5rem;
+}
+
+.house-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #001e3c;
+    margin: 0 0 0.5rem 0;
+}
+
+.house-location {
+    font-size: 0.8rem;
+    color: #6b7a8c;
+    margin: 0 0 1rem 0;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.house-specs-elegant {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #edf2f7;
+}
+
+.house-spec {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.8rem;
+    color: #4b6a7c;
+}
+
+.house-price {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #38a9a3;
+}
+
+.house-features-elegant {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.feature-tag-elegant {
+    background: #f5f7fa;
+    padding: 0.25rem 0.75rem;
+    border-radius: 30px;
+    font-size: 0.7rem;
+    color: #4b6a7c;
+}
+
+.view-details-elegant {
+    width: 100%;
+    background: white;
+    border: 1px solid #38a9a3;
+    color: #38a9a3;
+    padding: 0.6rem;
+    border-radius: 40px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.view-details-elegant:hover {
+    background: #38a9a3;
+    color: white;
+}
+
+/* Quick Tips - Elegant Card */
+.quick-tips-elegant {
+    background: white;
+    border-radius: 24px;
+    padding: 2rem;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
+    margin-top: 1rem;
+}
+
+.tips-header-elegant {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    margin-bottom: 1.75rem;
+}
+
+.tips-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.tips-icon-wrapper i {
+    font-size: 1.75rem;
+}
+
+.tips-title-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.tips-subtitle {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #6b7a8c;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 0.25rem;
+}
+
+.tips-title-wrapper h4 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #001e3c;
+    margin: 0;
+}
+
+.tips-grid-elegant {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.tip-card {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: #f8fafc;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    color: #4b6a7c;
+}
+
+.tip-card i {
+    font-size: 0.5rem;
+}
+
+/* Responsive */
+@media (max-width: 1400px) {
+    .houses-grid-elegant {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1200px) {
+    .category-container {
+        padding: 2rem;
+        gap: 3rem;
+    }
+
+    .content-two-column-elegant {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .houses-grid-elegant {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 1024px) {
+    .category-container {
+        flex-direction: column;
+        padding: 2rem;
+    }
+
+    .section-sidebar {
+        position: relative;
+        height: auto;
+        width: 100%;
+        top: 0;
+    }
+
+    .main-content-full {
+        max-width: 100%;
+    }
+
+    .market-stats-elegant {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    .market-stat-divider {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .category-container {
+        padding: 1.5rem;
+    }
+
+    .houses-grid-elegant {
+        grid-template-columns: 1fr;
+    }
+
+    .tips-grid-elegant {
+        grid-template-columns: 1fr;
+    }
+
+    .section-header-elegant {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .hero-title-elegant {
+        font-size: 2rem;
+    }
+}

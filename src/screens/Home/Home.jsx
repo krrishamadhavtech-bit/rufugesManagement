@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import "./home.css";
+import { fetchCategories } from "../../services/category";
 import family from '../../assets/family.jpg';
 import sunset from '../../assets/sunset.jpg';
 import legal from '../../assets/legal.jpg';
@@ -12,8 +13,10 @@ import job from '../../assets/job.jpg';
 function Home() {
     const navigate = useNavigate();
     const [activeTab, setActiveTab] = useState("home");
-    const [scrolled, setScrolled] = useState(false);
     const [aboutVisible, setAboutVisible] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const [loading, setLoading] = useState(true);
+
     // State for animated counters
     const [projects, setProjects] = useState(0);
     const [lives, setLives] = useState(0);
@@ -23,20 +26,22 @@ function Home() {
     const aboutRef = useRef(null);
     const contactRef = useRef(null);
 
-    const navItems = ["Home", "About", "Contact", "Settings"];
+    const navItems = ["Home", "About", "Contact", "News Corner", "Upcoming Events", "Settings"];
 
-    // Scroll effect for sticky header
     useEffect(() => {
-        const handleScroll = () => {
-            if (window.scrollY > 20) {
-                setScrolled(true);
-            } else {
-                setScrolled(false);
+        const getCategories = async () => {
+            try {
+                const response = await fetchCategories();
+                if (response.statusCode === 200) {
+                    setCategories(response.data);
+                }
+            } catch (error) {
+                console.error("Failed to fetch categories:", error);
+            } finally {
+                setLoading(false);
             }
         };
-
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
+        getCategories();
     }, []);
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -102,14 +107,14 @@ function Home() {
     const scrollToSection = (section) => {
         setActiveTab(section.toLowerCase());
 
-        switch (section.toLowerCase()) {
+        switch (section.toLowerCase().replace(/\s+/g, '-')) {
             case 'home':
                 homeRef.current?.scrollIntoView({ behavior: 'smooth' });
                 break;
-            case 'about':
+            case 'about-us':
                 aboutRef.current?.scrollIntoView({ behavior: 'smooth' });
                 break;
-            case 'contact':
+            case 'contact-us':
                 contactRef.current?.scrollIntoView({ behavior: 'smooth' });
                 break;
             default:
@@ -178,38 +183,8 @@ function Home() {
 
     return (
         <div className="home-container">
-            {/* Header Navigation - Sticky with scroll effect */}
-            <header className={`site-header ${scrolled ? 'scrolled' : ''}`}>
-                <div className="header-content">
-                    <div className="logo">
-                        <span className="logo-dot">●</span>
-                        <span className="logo-text">RAHA</span>
-                    </div>
-
-                    <nav className="main-nav">
-                        {navItems.map((item) => (
-                            <a
-                                key={item}
-                                href="#"
-                                className={`nav-link ${activeTab === item.toLowerCase() ? 'active' : ''}`}
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    scrollToSection(item);
-                                }}
-                            >
-                                {item}
-                            </a>
-                        ))}
-                    </nav>
-
-                    <button className="donate-header-btn">
-                        <i className="fa-solid fa-sign-out"></i>
-                    </button>
-                </div>
-            </header>
-
             {/* Hero Section - With ref for Home scroll */}
-            <div ref={homeRef} className="hero-section">
+            <div ref={homeRef} id="home" className="hero-section">
                 <div className="hero-overlay-image">
                     <img
                         src="https://images.unsplash.com/photo-1542810634-71277d95dcbb?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
@@ -298,105 +273,45 @@ function Home() {
                 </div>
 
                 <div className="impact-grid">
-                    <div className="impact-card">
-                        <div className="impact-image">
-                            <img src={health} alt="Health for All" />
+                    {loading ? (
+                        <div className="loading-container">
+                            <p>Loading categories...</p>
                         </div>
-                        <div className="impact-content">
-                            <h3 className="impact-title">Health for All</h3>
-                            <p className="impact-description">
-                                Providing free health care, meals, and other support to vulnerable communities.
-                            </p>
-                            <a href="#" className="impact-link">Learn More →</a>
-                        </div>
-                    </div>
-
-                    <div className="impact-card">
-                        <div className="impact-image">
-                            <img src={house} alt="House & Living" />
-                        </div>
-                        <div className="impact-content">
-                            <h3 className="impact-title">House & Living</h3>
-                            <p className="impact-description">
-                                Ensuring access to clean water is a fundamental human right.
-                            </p>
-                            <a href="#" className="impact-link">Learn More →</a>
-                        </div>
-                    </div>
-
-                    <div className="impact-card">
-                        <div className="impact-image">
-                            <img src={education} alt="Education" />
-                        </div>
-                        <div className="impact-content">
-                            <h3 className="impact-title">Education</h3>
-                            <p className="impact-description">
-                                Supporting environmental projects that benefit the planet.
-                            </p>
-                            <a href="#" className="impact-link">Learn More →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="impact-grid">
-                    <div className="impact-card">
-                        <div className="impact-image">
-                            <img src={job} alt="Work & Jobs" />
-                        </div>
-                        <div className="impact-content">
-                            <h3 className="impact-title">Work & Jobs</h3>
-                            <p className="impact-description">
-                                Providing free health care, meals, and other support to vulnerable communities.
-                            </p>
-                            <a href="#" className="impact-link">Learn More →</a>
-                        </div>
-                    </div>
-
-                    <div className="impact-card">
-                        <div className="impact-image">
-                            <img src={legal} alt="Legal Rights" />
-                        </div>
-                        <div className="impact-content">
-                            <h3 className="impact-title">Legal Rights</h3>
-                            <p className="impact-description">
-                                Ensuring access to clean water is a fundamental human right.
-                            </p>
-                            <a href="#" className="impact-link">Learn More →</a>
-                        </div>
-                    </div>
-
-                    <div className="impact-card">
-                        <div className="impact-image">
-                            <img src={family} alt="Family & Children" />
-                        </div>
-                        <div className="impact-content">
-                            <h3 className="impact-title">Family & Children</h3>
-                            <p className="impact-description">
-                                Supporting environmental projects that benefit the planet.
-                            </p>
-                            <a href="#" className="impact-link">Learn More →</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="impact-grid">
-                    <div className="impact-card">
-                        <div className="impact-image">
-                            <img src={sunset} alt="Daily Life" />
-                        </div>
-                        <div className="impact-content">
-                            <h3 className="impact-title">Daily Life</h3>
-                            <p className="impact-description">
-                                Providing free health care, meals, and other support to vulnerable communities.
-                            </p>
-                            <a href="#" className="impact-link">Learn More →</a>
-                        </div>
-                    </div>
+                    ) : (
+                        categories.map((category) => (
+                            <div
+                                key={category._id}
+                                onClick={() => navigate("/Category", { state: { categoryId: category._id } })}
+                                className="impact-card"
+                            >
+                                <div className="impact-image">
+                                    <img
+                                        src={category.icon?.url || sunset}
+                                        alt={category.identifier}
+                                        onError={(e) => { e.target.src = sunset; }}
+                                    />
+                                </div>
+                                <div className="impact-content">
+                                    <h3 className="impact-title">
+                                        {category.identifier
+                                            ? category.identifier.charAt(0).toUpperCase() + category.identifier.slice(1).replace(/-/g, ' ')
+                                            : "Service"}
+                                    </h3>
+                                    <p className="impact-description">
+                                        {category.description || `Providing essential ${category.identifier || 'support'} services to our community.`}
+                                    </p>
+                                    <a href="#" className="impact-link" onClick={(e) => { e.preventDefault(); e.stopPropagation(); navigate('/Category', { state: { categoryId: category._id } }); }}>
+                                        Learn More →
+                                    </a>
+                                </div>
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
 
             {/* About Us Section */}
-            <div ref={aboutRef} className="about-section">
+            <div ref={aboutRef} id="about-us" className="about-section">
                 <div className="about-grid">
                     <div className="about-content">
                         <span className="section-badge">ABOUT US</span>
@@ -506,7 +421,7 @@ function Home() {
             </div>
 
             {/* Contact Us Section */}
-            <div ref={contactRef} className="contact-section">
+            <div ref={contactRef} id="contact-us" className="contact-section">
                 <div className="section-header centered">
                     <span className="section-badge">GET IN TOUCH</span>
                     <h2 className="section-title">Contact Us</h2>
@@ -595,48 +510,34 @@ function Home() {
                     </div>
                 </div>
             </div>
-
-            {/* Footer */}
-            <footer className="site-footer">
-                <div className="footer-content">
-                    <div className="footer-brand">
-                        <div className="logo">
-                            <span className="logo-dot">●</span>
-                            <span className="logo-text">RAHA</span>
-                        </div>
-                        <p>Compassionate Service for All People Everywhere</p>
-                    </div>
-
-                    <div className="footer-links">
-                        <div className="footer-column">
-                            <h4>Organization</h4>
-                            <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>About Us</a>
-                            <a href="#">Our Team</a>
-                            <a href="#">Careers</a>
-                            <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a>
-                        </div>
-                        <div className="footer-column">
-                            <h4>Projects</h4>
-                            <a href="#">Health for All</a>
-                            <a href="#">Clean Water</a>
-                            <a href="#">Eco Hope</a>
-                            <a href="#">Education</a>
-                        </div>
-                        <div className="footer-column">
-                            <h4>Support</h4>
-                            <a href="#">Donate</a>
-                            <a href="#">Volunteer</a>
-                            <a href="#">Partnerships</a>
-                            <a href="#">FAQ</a>
-                        </div>
-                    </div>
+            {/* Floating Support Button */}
+            <div className="floating-wrapper">
+                <div className="floating-bottom-icon">
+                    <i className="fas fa-question"></i>
                 </div>
 
-                <div className="footer-bottom">
-                    <p>© 2026 Raha. All rights reserved.</p>
-                    <p className="site-credit">sit site</p>
+                <div className="floating-categories">
+                    {categories.map((cat) => (
+                        <div
+                            key={cat._id}
+                            className="floating-category-item"
+                            onClick={() =>
+                                navigate("/Category", { state: { categoryId: cat._id } })
+                            }
+                        >
+                            <img
+                                src={cat.icon?.url || sunset}
+                                alt={cat.identifier}
+                                className="floating-category-img"
+                            />
+                            <span>
+                                {cat.identifier?.charAt(0).toUpperCase() +
+                                    cat.identifier?.slice(1).replace(/-/g, " ")}
+                            </span>
+                        </div>
+                    ))}
                 </div>
-            </footer>
+            </div>
         </div>
     );
 }

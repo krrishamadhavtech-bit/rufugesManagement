@@ -1,8 +1,35 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { completeOnboarding } from "../../../services/auth";
 import "../onboarding.css";
 import loginBg from "../../../assets/homepage.jpg";
 
 function Finish() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const [localLoading, setLocalLoading] = useState(false);
+    const [localError, setLocalError] = useState("");
+
+    const handleWelcome = async () => {
+        setLocalLoading(true);
+        setLocalError("");
+
+        try {
+            const resultAction = await dispatch(completeOnboarding());
+
+            if (completeOnboarding.fulfilled.match(resultAction)) {
+                navigate("/home", { replace: true });
+            } else {
+                setLocalError(resultAction.payload || "Failed to complete onboarding.");
+            }
+        } catch (err) {
+            setLocalError("Something went wrong. Please try again.");
+        } finally {
+            setLocalLoading(false);
+        }
+    };
+
     return (
         <div className="onboarding-container" style={{ backgroundImage: `url(${loginBg})` }}>
             <div className="onboarding-card">
@@ -23,11 +50,15 @@ function Finish() {
                     building your new journey in Denmark.
                 </p>
 
-                <Link to="/">
-                    <button className="onboarding-button">
-                        Go to Login
-                    </button>
-                </Link>
+                {localError && <p className="error-message">{localError}</p>}
+
+                <button
+                    className="onboarding-button"
+                    onClick={handleWelcome}
+                    disabled={localLoading}
+                >
+                    {localLoading ? "Finalizing..." : "Welcome"}
+                </button>
 
             </div>
         </div>

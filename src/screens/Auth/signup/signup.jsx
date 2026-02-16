@@ -14,27 +14,38 @@ function Signup() {
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
+        language: "en"
     });
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [validationError, setValidationError] = useState("");
 
     const { loading, error, success } = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (success) {
-            navigate("/onboarding/welcome");
+            navigate("/"); // Navigate to login screen
             dispatch(resetAuthState());
         }
     }, [success, navigate, dispatch]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+        if (validationError) setValidationError("");
     };
 
     const handleSignup = (e) => {
         e.preventDefault();
+        if (formData.password !== formData.confirmPassword) {
+            setValidationError("Passwords do not match!");
+            return;
+        }
         dispatch(registerUser({
+            name: formData.name,
             email: formData.email,
             password: formData.password,
-            name: formData.name // Although prompt only mentioned email/pass, common to include name
+            language: formData.language
         }));
     };
 
@@ -78,16 +89,51 @@ function Signup() {
                     <div className="input-group">
                         <i className="fa-solid fa-lock"></i>
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             placeholder="Password"
                             value={formData.password}
                             onChange={handleChange}
                             required
                         />
+                        <i
+                            className={`fa-solid ${showPassword ? "fa-eye-slash" : "fa-eye"} password-toggle`}
+                            onClick={() => setShowPassword(!showPassword)}
+                        ></i>
                     </div>
 
-                    {error && <p className="error-message" style={{ color: 'red', marginBottom: '10px', textAlign: 'center' }}>{error}</p>}
+                    <div className="input-group">
+                        <i className="fa-solid fa-lock"></i>
+                        <input
+                            type={showConfirmPassword ? "text" : "password"}
+                            name="confirmPassword"
+                            placeholder="Confirm Password"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            required
+                        />
+                        <i
+                            className={`fa-solid ${showConfirmPassword ? "fa-eye-slash" : "fa-eye"} password-toggle`}
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                        ></i>
+                    </div>
+
+                    <div className="input-group">
+                        <i className="fa-solid fa-globe"></i>
+                        <select
+                            name="language"
+                            value={formData.language}
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="en">English</option>
+                            <option value="da">Dansk</option>
+                            <option value="ar">Arabic</option>
+                            <option value="uk">Ukrainian</option>
+                        </select>
+                    </div>
+
+                    {(error || validationError) && <p className="error-message">{error || validationError}</p>}
 
                     <button type="submit" disabled={loading}>
                         {loading ? "Creating Account..." : "Create Account"}

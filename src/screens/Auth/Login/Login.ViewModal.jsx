@@ -12,14 +12,20 @@ const ViewModal = () => {
         password: "",
     });
 
-    const { loading, error, success } = useSelector((state) => state.auth);
+    const { loading, error, success, user } = useSelector((state) => state.auth);
 
     useEffect(() => {
         if (success) {
-            navigate("/home");
+            if (user?.role === 'admin') {
+                navigate("/admin/dashboard", { replace: true });
+            } else if (user?.onboardingCompleted) {
+                navigate("/home", { replace: true });
+            } else {
+                navigate("/onboarding/welcome", { replace: true });
+            }
             dispatch(resetAuthState());
         }
-    }, [success, navigate, dispatch]);
+    }, [success, navigate, dispatch, user]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });

@@ -1,0 +1,410 @@
+/* Header.css - Compact header matching screenshot */
+.site-header {
+    background: white;
+    border-bottom: 1px solid var(--border-color);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    transition: all 0.2s ease;
+    height: 64px;
+    /* Fixed compact height */
+    display: flex;
+    align-items: center;
+}
+
+.site-header.scrolled {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.98);
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 32px;
+    height: 100%;
+    /* Full height of header */
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.logo-dot {
+    color: var(--primary);
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1;
+}
+
+.logo-text {
+    font-size: 1.3rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    color: var(--secondary);
+    line-height: 1;
+}
+
+.main-nav {
+    display: flex;
+    gap: 32px;
+    height: 100%;
+    align-items: center;
+}
+
+.nav-link {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: color 0.2s;
+    position: relative;
+    cursor: pointer;
+    padding: 4px 0;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    height: 100%;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary);
+}
+
+.donate-header-btn {
+    background: transparent;
+    color: var(--text-light);
+    border: none;
+    padding: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+}
+
+.donate-header-btn:hover {
+    background: var(--primary-light);
+    color: var(--primary);
+    border-color: var(--primary);
+}
+
+.donate-header-btn i {
+    font-size: 1rem;
+}
+
+/* Remove the underline effect - cleaner look */
+.nav-link::after {
+    display: none;
+}
+
+/* Adjust body padding to match compact header */
+body {
+    /* Match header height */
+    margin: 0;
+}
+
+/* No extra spacing */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Header.css - with Settings Dropdown */
+
+/* Add to your existing styles */
+
+.nav-item-wrapper {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.settings-trigger {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.settings-arrow {
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+    color: currentColor;
+}
+
+.settings-arrow.open {
+    transform: rotate(180deg);
+}
+
+/* Settings Dropdown */
+.settings-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    right: 0;
+    width: 320px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--border-color);
+    z-index: 1001;
+    animation: dropdownFade 0.2s ease;
+}
+
+@keyframes dropdownFade {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.settings-dropdown-header {
+    padding: 1rem 1.25rem;
+    background: var(--gray-light);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.settings-dropdown-header i {
+    font-size: 1.1rem;
+    color: var(--primary);
+}
+
+.settings-dropdown-header span {
+    font-weight: 600;
+    color: var(--secondary);
+    font-size: 0.95rem;
+}
+
+.settings-menu {
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.settings-menu-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 0.75rem 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.settings-menu-item:hover {
+    background: var(--gray-light);
+}
+
+.settings-item-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--gray-light);
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.settings-menu-item:hover .settings-item-icon {
+    background: var(--primary);
+    color: white;
+}
+
+.settings-item-icon i {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    transition: all 0.2s ease;
+}
+
+.settings-menu-item:hover .settings-item-icon i {
+    color: white;
+}
+
+.settings-item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.settings-item-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--secondary);
+    margin-bottom: 0.15rem;
+}
+
+.settings-item-description {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    line-height: 1.4;
+}
+
+/* Submenu Styles */
+.settings-menu-item.has-submenu {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.submenu-arrow {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-left: auto;
+}
+
+.language-submenu {
+    position: absolute;
+    top: 0;
+    left: -175px;
+    /* Slight overlap with parent to prevent gap while moving mouse */
+    width: 180px;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border: 1px solid var(--border-color);
+    list-style: none;
+    padding: 0.5rem 0;
+    z-index: 1002;
+    animation: submenuFade 0.2s ease;
+}
+
+@keyframes submenuFade {
+    from {
+        opacity: 0;
+        transform: translateX(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.language-submenu li {
+    padding: 0.6rem 1.25rem;
+    font-size: 0.85rem;
+    color: var(--secondary);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.language-submenu li:hover {
+    background: var(--gray-light);
+    color: var(--primary);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .settings-dropdown {
+        width: 280px;
+        right: -20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .settings-dropdown {
+        position: fixed;
+        top: 56px;
+        left: 0;
+        right: 0;
+        width: 100%;
+        border-radius: 0;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .settings-menu-item {
+        padding: 1rem 1.5rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .settings-wrapper {
+        display: block;
+    }
+
+    .settings-dropdown {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 20px 20px 0 0;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .header-content {
+        padding: 0 24px;
+    }
+
+    .main-nav {
+        gap: 24px;
+    }
+}
+
+@media (max-width: 768px) {
+    .site-header {
+        height: 56px;
+    }
+
+    body {
+        padding-top: 56px;
+    }
+
+    .header-content {
+        padding: 0 20px;
+    }
+
+    .main-nav {
+        gap: 16px;
+    }
+
+    .nav-link {
+        font-size: 0.85rem;
+    }
+
+    .logo-text {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .main-nav {
+        display: none;
+        /* Add hamburger menu later */
+    }
+}

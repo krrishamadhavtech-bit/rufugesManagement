@@ -40,6 +40,14 @@
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
 
+    /* Alerts / Feedback */
+    --error: #e53e3e;
+    --error-bg: #fff5f5;
+    --error-border: #fed7d7;
+    --success: #38a169;
+    --success-bg: #f0fff4;
+    --success-border: #c6f6d5;
+
     /* Border radius */
     --border-radius: 24px;
     --border-radius-sm: 12px;

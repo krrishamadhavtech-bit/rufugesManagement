@@ -54,16 +54,6 @@
     font-size: 0.95rem;
 }
 
-.signup-card input {
-    width: 100%;
-    padding: 14px 18px;
-    margin-bottom: 7px;
-    border-radius: 50px;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    background: rgba(255, 255, 255, 0.25);
-    color: var(--white);
-    transition: 0.3s ease;
-}
 
 .signup-card input::placeholder {
     color: rgba(255, 255, 255, 0.7);
@@ -119,7 +109,7 @@
 .input-group i {
     position: absolute;
     left: 18px;
-    top: 45%;
+    top: 50%;
     transform: translateY(-50%);
     color: rgba(255, 255, 255, 0.8);
     font-size: 1rem;
@@ -129,7 +119,7 @@
 /* ADJUST INPUT PADDING */
 .signup-card input {
     width: 100%;
-    padding: 14px 18px 14px 48px;
+    padding: 14px 45px 14px 48px;
     /* space for icon */
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.3);
@@ -138,10 +128,68 @@
     transition: 0.3s ease;
 }
 
+.password-toggle {
+    cursor: pointer;
+    left: auto !important;
+    right: 18px !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    transition: 0.3s ease;
+    top: 50% !important;
+    position: absolute;
+    transform: translateY(-50%);
+}
+
+.password-toggle:hover {
+    color: white !important;
+}
+
 /* CHANGE ICON COLOR ON FOCUS */
 .signup-card input:focus+i,
-.signup-card input:focus~i {
-    color: #E11F26;
+.signup-card input:focus~i,
+.signup-card select:focus~i {
+    color: var(--primary);
+}
+
+.signup-card select {
+    width: 100%;
+    padding: 14px 45px 14px 48px;
+    border-radius: 50px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.25);
+    color: white;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    transition: 0.3s ease;
+    cursor: pointer;
+}
+
+.signup-card select option {
+    background: var(--secondary);
+    color: white;
+}
+
+.signup-card select:focus {
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.35);
+}
+
+/* Custom arrow for select if needed */
+.input-group::after {
+    content: '\f107';
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.8);
+    pointer-events: none;
+}
+
+/* Only apply arrow to groups with select */
+.input-group:not(:has(select))::after {
+    display: none;
 }
 
 
