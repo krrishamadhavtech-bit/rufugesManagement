@@ -12,9 +12,12 @@ API.interceptors.request.use((config) => {
     if (token) {
         config.headers.Authorization = `Bearer ${token}`;
         console.log(`API Request [${config.method.toUpperCase()}] ${config.url} - Auth Attached`);
-    } else {
-        console.warn(`API Request [${config.method.toUpperCase()}] ${config.url} - NO TOKEN FOUND`);
     }
+
+    // Add this to debug what's being sent
+    console.log('Request data:', config.data);
+    console.log('Request method:', config.method);
+
     return config;
 });
 

@@ -46,7 +46,7 @@ export const addCategory = async (categoryData) => {
             console.log(`${pair[0]}: ${pair[1]}`);
         }
 
-        const response = await API.post("/category/add-category", formData);
+        const response = await API.post(CATEGORY_ENDPOINTS.ADD, formData);
         return response.data;
     } catch (error) {
         console.error("Error adding category:", error.response?.data || error.message);
@@ -76,7 +76,7 @@ export const updateCategory = async (categoryId, categoryData) => {
             console.log(`${pair[0]}: ${pair[1]}`);
         }
 
-        const response = await API.put(`/category/update-category/${categoryId}`, formData);
+        const response = await API.put(CATEGORY_ENDPOINTS.UPDATE(categoryId), formData);
         return response.data;
     } catch (error) {
         console.error("Error updating category:", error.response?.data || error);
@@ -86,7 +86,9 @@ export const updateCategory = async (categoryId, categoryData) => {
 
 export const deleteCategory = async (categoryId) => {
     try {
-        const response = await API.delete(`/category/delete-category/${categoryId}`);
+        // Use the configured API instance which handles interceptors and base URL
+        const response = await API.delete(CATEGORY_ENDPOINTS.DELETE(categoryId));
+        console.log("Category deleted successfully:", response.data);
         return response.data;
     } catch (error) {
         console.error("Error deleting category:", error.response?.data || error);

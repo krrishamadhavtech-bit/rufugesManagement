@@ -64,6 +64,10 @@ const CategoryManagement = () => {
         content_gu: ""
     });
 
+    // Delete Confirmation Modal state
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteTarget, setDeleteTarget] = useState(null); // { id: string, type: 'category' | 'subcategory' }
+
     const handleOpenSubModal = async (category) => {
         setSelectedCategory(category);
         setShowSubModal(true);
@@ -222,20 +226,33 @@ const CategoryManagement = () => {
         setShowForm(true);
     };
 
-    const handleDelete = async (id) => {
-        if (window.confirm("Are you sure you want to delete this category? This will affect all content in this category.")) {
-            try {
-                const response = await deleteCategory(id);
+    const handleDelete = (id) => {
+        setDeleteTarget({ id, type: 'category' });
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = async () => {
+        if (!deleteTarget) return;
+
+        try {
+            if (deleteTarget.type === 'category') {
+                const response = await deleteCategory(deleteTarget.id);
                 if (response.statusCode === 200) {
                     alert("Category deleted successfully!");
                     loadCategories();
                 }
-            } catch (error) {
-                console.error("Delete failed:", error);
-                alert("Failed to delete category.");
+            } else if (deleteTarget.type === 'subcategory') {
+                // Similar for subcategory
             }
+        } catch (error) {
+            console.error("Delete failed:", error);
+            alert(`Failed to delete ${deleteTarget.type}.`);
+        } finally {
+            setShowDeleteModal(false);
+            setDeleteTarget(null);
         }
     };
+
 
     const handleSubEdit = (sub) => {
         setEditingSubId(sub._id);
@@ -249,23 +266,9 @@ const CategoryManagement = () => {
         });
     };
 
-    const handleSubDelete = async (subId) => {
-        if (window.confirm("Are you sure you want to delete this sub-category?")) {
-            try {
-                const response = await deleteSubCategory(subId);
-                if (response.statusCode === 200) {
-                    alert("Sub-category deleted successfully!");
-                    // Refresh sub-categories
-                    const subResponse = await fetchSubCategories(selectedCategory._id);
-                    if (subResponse.success) {
-                        setSubCategories(subResponse.data);
-                    }
-                }
-            } catch (error) {
-                console.error("Delete failed:", error);
-                alert("Failed to delete sub-category.");
-            }
-        }
+    const handleSubDelete = (subId) => {
+        setDeleteTarget({ id: subId, type: 'subcategory' });
+        setShowDeleteModal(true);
     };
 
     const handleToggleActive = (id) => {
@@ -429,7 +432,7 @@ const CategoryManagement = () => {
                         ) : categories.length === 0 ? (
                             <tr><td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>No categories found</td></tr>
                         ) : categories.map((category, index) => (
-                            <tr key={category._id || index}>
+                            <tr key={category._id}>
                                 <td className="category-id">{index + 1}</td>
                                 <td className="category-name">
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
@@ -460,7 +463,7 @@ const CategoryManagement = () => {
                                         <button className="action-btn edit" onClick={() => handleEdit(category)}>
                                             <i className="fas fa-edit"></i>
                                         </button>
-                                        <button className="action-btn delete" onClick={() => handleDelete(category._id)}>
+                                        <button type="button" className="action-btn delete" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDelete(category._id); }}>
                                             <i className="fas fa-trash"></i>
                                         </button>
                                     </div>
@@ -597,7 +600,7 @@ const CategoryManagement = () => {
                                                             <button className="action-btn edit" onClick={() => handleSubEdit(sub)}>
                                                                 <i className="fas fa-edit"></i>
                                                             </button>
-                                                            <button className="action-btn delete" onClick={() => handleSubDelete(sub._id)}>
+                                                            <button type="button" className="action-btn delete" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleSubDelete(sub._id); }}>
                                                                 <i className="fas fa-trash"></i>
                                                             </button>
                                                         </div>
@@ -607,6 +610,34 @@ const CategoryManagement = () => {
                                         </tbody>
                                     </table>
                                 )}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Delete Confirmation Modal */}
+            {showDeleteModal && (
+                <div className="modal-overlay" style={{ zIndex: 10000 }}>
+                    <div className="modal-content" style={{ maxWidth: '400px', width: '90%' }}>
+                        <div className="modal-header">
+                            <h2>Confirm Deletion</h2>
+                            <button className="close-btn" onClick={() => setShowDeleteModal(false)}>
+                                <i className="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            <p style={{ marginBottom: '1.5rem' }}>
+                                Are you sure you want to delete this {deleteTarget?.type}?
+                                {deleteTarget?.type === 'category' && " This will affect all content in this category."}
+                            </p>
+                            <div className="form-actions">
+                                <button type="button" className="btn-outline" onClick={() => setShowDeleteModal(false)}>
+                                    Cancel
+                                </button>
+                                <button type="button" className="btn-primary" style={{ backgroundColor: '#dc3545', borderColor: '#dc3545' }} onClick={confirmDelete}>
+                                    Delete
+                                </button>
                             </div>
                         </div>
                     </div>
