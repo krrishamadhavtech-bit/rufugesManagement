@@ -21,3 +21,17 @@ export const SUB_CATEGORY_ENDPOINTS = {
     UPDATE: (id) => `${API_URL}/api/v1/sub-category/update-sub-category/${id}`,
     DELETE: (id) => `${API_URL}/api/v1/sub-category/delete-sub-category/${id}`,
 }
+
+export const NEWS_ENDPOINTS = {
+    LIST: `${API_URL}/api/v1/news/get-all-news`,
+    ADD: `${API_URL}/api/v1/news/add-news`,
+    UPDATE: (id) => `${API_URL}/api/v1/news/update-news/${id}`,
+    DELETE: (id) => `${API_URL}/api/v1/news/delete-news/${id}`,
+}
+
+export const EVENT_ENDPOINTS = {
+    LIST: `${API_URL}/api/v1/event/get-events`,
+    ADD: `${API_URL}/api/v1/event/add-event`,
+    UPDATE: (id) => `${API_URL}/api/v1/event/update-event/${id}`,
+    DELETE: (id) => `${API_URL}/api/v1/event/delete-event/${id}`,
+}

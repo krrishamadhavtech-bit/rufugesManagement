@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
     BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
@@ -6,265 +6,197 @@ import {
     Area, AreaChart
 } from 'recharts';
 import "../style.css";
+import "../SideDrawer/sidebar.css";
 
-import { useDispatch } from "react-redux";
-import { logout } from "../../../redux/slices/authSlice";
-
-import "./../sidebar.css"; // Import sidebar styles
+import { fetchNews } from "../../../services/news";
+import { fetchEvents } from "../../../services/event";
+import { fetchCategories, fetchSubCategories } from "../../../services/category";
 
 const AdminDashboard = () => {
     const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const [activeTab, setActiveTab] = useState('dashboard');
+    const [loading, setLoading] = useState(true);
+    const [stats, setStats] = useState({
+        totalNews: 0,
+        totalEvents: 0,
+        totalCategories: 0,
+        totalSubCategories: 0,
+        totalContent: 0
+    });
 
-    const handleLogout = () => {
-        dispatch(logout());
-        navigate("/", { replace: true });
-    };
+    const [categoryData, setCategoryData] = useState([]);
+    const [trendData, setTrendData] = useState([]);
 
-    // Stats data
-    const stats = {
-        totalContent: 1248,
-        categoriesCount: 18,
-        lastUpdated: "2 hours ago",
-        pendingReviews: 23,
-        totalUsers: 3456,
-        activeMarkers: 156
-    };
+    useEffect(() => {
+        const loadDashboardData = async () => {
+            setLoading(true);
+            try {
+                // Fetch basic entities
+                const newsRes = await fetchNews();
+                const eventsRes = await fetchEvents();
+                const categoriesRes = await fetchCategories();
 
-    // Chart data
-    const contentTrendData = [
-        { name: 'Mon', articles: 12, events: 5, markers: 3 },
-        { name: 'Tue', articles: 19, events: 8, markers: 4 },
-        { name: 'Wed', articles: 15, events: 12, markers: 6 },
-        { name: 'Thu', articles: 21, events: 9, markers: 8 },
-        { name: 'Fri', articles: 24, events: 14, markers: 5 },
-        { name: 'Sat', articles: 8, events: 6, markers: 2 },
-        { name: 'Sun', articles: 5, events: 3, markers: 1 },
-    ];
+                // Robust check for data arrays
+                const news = (newsRes.statusCode === 200 || newsRes.success) ? newsRes.data : (Array.isArray(newsRes) ? newsRes : []);
+                const events = (eventsRes.statusCode === 200 || eventsRes.success) ? eventsRes.data : (Array.isArray(eventsRes) ? eventsRes : []);
+                const categories = (categoriesRes.statusCode === 200 || categoriesRes.success) ? categoriesRes.data : (Array.isArray(categoriesRes) ? categoriesRes : []);
 
-    const categoryDistribution = [
-        { name: 'Housing', value: 35 },
-        { name: 'Legal', value: 25 },
-        { name: 'Education', value: 20 },
-        { name: 'Health', value: 15 },
-        { name: 'Community', value: 5 },
-    ];
+                // Fetch subcategories for each category
+                const subPromises = categories.map(cat => fetchSubCategories(cat._id));
+                const subResults = await Promise.all(subPromises);
 
-    const COLORS = ['#38a9a3', '#517ea8', '#b86f7a', '#5c8d7f', '#f5a97f'];
+                let totalSub = 0;
+                categories.forEach((cat, index) => {
+                    const subs = subResults[index];
+                    totalSub += (subs.success || subs.statusCode === 200) ? subs.data.length : (Array.isArray(subs) ? subs.length : 0);
+                });
 
-    const recentContent = [
-        { id: 1, title: "New Rental Reform Act", category: "Policy", status: "Published", updated: "2 min ago", author: "Maria J." },
-        { id: 2, title: "Finding Apartment in Copenhagen", category: "Housing", status: "Draft", updated: "15 min ago", author: "Lars P." },
-        { id: 3, title: "Tenant Rights Workshop", category: "Events", status: "Published", updated: "1 hour ago", author: "Sofie A." },
-        { id: 4, title: "Legal Aid for Internationals", category: "Legal", status: "Review", updated: "3 hours ago", author: "Thomas L." },
-        { id: 5, title: "Danish Language Schools", category: "Education", status: "Published", updated: "5 hours ago", author: "Emma N." },
-    ];
+                setStats({
+                    totalNews: news.length,
+                    totalEvents: events.length,
+                    totalCategories: categories.length,
+                    totalSubCategories: totalSub,
+                    totalContent: news.length + events.length
+                });
 
-    const menuItems = [
-        { id: 'dashboard', icon: 'fa-home', label: 'Dashboard', path: '/admin/dashboard' },
-        { id: 'content', icon: 'fa-file-alt', label: 'Content Management', path: '/admin/content' },
-        { id: 'categories', icon: 'fa-tags', label: 'Categories', path: '/admin/categories' },
-        { id: 'users', icon: 'fa-users', label: 'User Management', path: '/admin/users' },
-        { id: 'analytics', icon: 'fa-chart-line', label: 'Analytics', path: '/admin/analytics' },
-        { id: 'settings', icon: 'fa-cog', label: 'Settings', path: '/admin/settings' },
-    ];
+                // Distribution for Pie Chart
+                setCategoryData([
+                    { name: 'News', value: news.length },
+                    { name: 'Events', value: events.length },
+                    { name: 'Categories', value: categories.length },
+                    { name: 'Sub-Categories', value: totalSub }
+                ]);
+
+                // Generate last 7 days trend data using local date comparison
+                const last7Days = [];
+                const formatLocal = (d) => {
+                    const year = d.getFullYear();
+                    const month = String(d.getMonth() + 1).padStart(2, '0');
+                    const day = String(d.getDate()).padStart(2, '0');
+                    return `${year}-${month}-${day}`;
+                };
+
+                for (let i = 6; i >= 0; i--) {
+                    const date = new Date();
+                    date.setDate(date.getDate() - i);
+                    const dayName = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'][date.getDay()];
+                    const dateStr = formatLocal(date);
+
+                    const newsCount = news.filter(n => {
+                        if (!n.date) return false;
+                        try {
+                            return formatLocal(new Date(n.date)) === dateStr;
+                        } catch (e) {
+                            return false;
+                        }
+                    }).length;
+
+                    const eventCount = events.filter(e => {
+                        if (!e.date) return false;
+                        try {
+                            return formatLocal(new Date(e.date)) === dateStr;
+                        } catch (e) {
+                            return false;
+                        }
+                    }).length;
+
+                    last7Days.push({
+                        name: dayName,
+                        news: newsCount,
+                        events: eventCount
+                    });
+                }
+                setTrendData(last7Days);
+
+            } catch (error) {
+                console.error("Error loading dashboard data:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadDashboardData();
+    }, []);
+
+    const COLORS = ['#38a9a3', '#517ea8', '#b86f7a', '#5c8d7f', '#f5a97f', '#8884d8', '#82ca9d', '#ffc658'];
+
 
     return (
-        <div className="admin-container">
-            {/* Sidebar */}
-            <aside className="admin-sidebar">
-                <div className="sidebar-header">
-                    <div className="sidebar-brand">
-                        <i className="fas fa-shield-alt"></i>
-                        <span>AdminPanel</span>
+        <>
+            <div className="page-header">
+                <div>
+                    <h1 className="page-title">Dashboard Overview</h1>
+                    <p className="page-subtitle">Welcome back, get an overview of your platform.</p>
+                </div>
+            </div>
+
+            {/* Stats Cards */}
+            <div className="stats-grid">
+                <div className="stat-card">
+                    <div className="stat-icon" style={{ background: '#38a9a315', color: '#38a9a3' }}>
+                        <i className="fas fa-newspaper"></i>
+                    </div>
+                    <div className="stat-content">
+                        <span className="stat-label">Total News</span>
+                        <span className="stat-value">{stats.totalNews}</span>
                     </div>
                 </div>
 
-                <div className="sidebar-menu">
-                    {menuItems.map((item) => (
-                        <div
-                            key={item.id}
-                            className={`menu-item ${activeTab === item.id ? 'active' : ''}`}
-                            onClick={() => {
-                                setActiveTab(item.id);
-                                navigate(item.path);
-                            }}
-                        >
-                            <i className={`fas ${item.icon}`}></i>
-                            <span className="menu-label">{item.label}</span>
-                        </div>
-                    ))}
-                </div>
-
-                <div className="sidebar-footer">
-                    <div className="user-profile">
-                        <div className="user-avatar">AD</div>
-                        <div className="user-info">
-                            <span className="user-name">Admin User</span>
-                            <span className="user-role">Super Admin</span>
-                        </div>
-                        <button className="logout-btn-admin" onClick={handleLogout} title="Logout" style={{ width: '32px', height: '32px', borderRadius: '8px', border: 'none', background: '#fee2e2', color: '#dc2626' }}>
-                            <i className="fas fa-sign-out-alt" style={{ fontSize: '0.9rem' }}></i>
-                        </button>
+                <div className="stat-card">
+                    <div className="stat-icon" style={{ background: '#517ea815', color: '#517ea8' }}>
+                        <i className="fas fa-calendar-alt"></i>
                     </div>
-                </div>
-            </aside>
-
-            {/* Main Content */}
-            <main className="dashboard-main">
-                <div className="page-header">
-                    <div>
-                        <h1 className="page-title">Dashboard Overview</h1>
-                        <p className="page-subtitle">Welcome back, get an overview of your platform.</p>
+                    <div className="stat-content">
+                        <span className="stat-label">Total Events</span>
+                        <span className="stat-value">{stats.totalEvents}</span>
                     </div>
                 </div>
 
-                {/* Stats Cards */}
-                <div className="stats-grid">
-                    <div className="stat-card">
-                        <div className="stat-icon" style={{ background: '#38a9a315', color: '#38a9a3' }}>
-                            <i className="fas fa-file-alt"></i>
-                        </div>
-                        <div className="stat-content">
-                            <span className="stat-label">Total Published Content</span>
-                            <span className="stat-value">{stats.totalContent}</span>
-                            <span className="stat-trend positive">
-                                <i className="fas fa-arrow-up"></i> 12% from last month
-                            </span>
-                        </div>
+                <div className="stat-card">
+                    <div className="stat-icon" style={{ background: '#b86f7a15', color: '#b86f7a' }}>
+                        <i className="fas fa-tags"></i>
                     </div>
-
-                    <div className="stat-card">
-                        <div className="stat-icon" style={{ background: '#517ea815', color: '#517ea8' }}>
-                            <i className="fas fa-tags"></i>
-                        </div>
-                        <div className="stat-content">
-                            <span className="stat-label">Total Categories</span>
-                            <span className="stat-value">{stats.categoriesCount}</span>
-                            <span className="stat-trend">
-                                <i className="fas fa-plus"></i> 2 new this month
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className="stat-card">
-                        <div className="stat-icon" style={{ background: '#f5a97f15', color: '#f5a97f' }}>
-                            <i className="fas fa-users"></i>
-                        </div>
-                        <div className="stat-content">
-                            <span className="stat-label">Active Users</span>
-                            <span className="stat-value">{stats.totalUsers}</span>
-                            <span className="stat-trend positive">
-                                <i className="fas fa-arrow-up"></i> 8% growth
-                            </span>
-                        </div>
+                    <div className="stat-content">
+                        <span className="stat-label">Total Categories</span>
+                        <span className="stat-value">{stats.totalCategories}</span>
                     </div>
                 </div>
 
-                {/* Charts Row */}
-                <div className="charts-row">
-                    <div className="chart-card">
-                        <div className="chart-header">
-                            <h3>Content Trend</h3>
-                            <div className="chart-legend">
-                                <span><span className="dot" style={{ background: '#38a9a3' }}></span> Articles</span>
-                                <span><span className="dot" style={{ background: '#517ea8' }}></span> Events</span>
-                                <span><span className="dot" style={{ background: '#b86f7a' }}></span> Markers</span>
-                            </div>
+                <div className="stat-card">
+                    <div className="stat-icon" style={{ background: '#f5a97f15', color: '#f5a97f' }}>
+                        <i className="fas fa-list-ul"></i>
+                    </div>
+                    <div className="stat-content">
+                        <span className="stat-label">Sub-Categories</span>
+                        <span className="stat-value">{stats.totalSubCategories}</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Quick Actions */}
+            <div className="quick-actions-section">
+                <h3>Quick Actions</h3>
+                <div className="quick-actions-grid">
+                    <div className="quick-action-card" onClick={() => navigate('/admin/news')}>
+                        <div className="quick-action-icon" style={{ background: '#38a9a315', color: '#38a9a3' }}>
+                            <i className="fas fa-newspaper"></i>
                         </div>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <AreaChart data={contentTrendData}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="#edf2f7" />
-                                <XAxis dataKey="name" stroke="#94a3b8" />
-                                <YAxis stroke="#94a3b8" />
-                                <Tooltip />
-                                <Area type="monotone" dataKey="articles" stackId="1" stroke="#38a9a3" fill="#38a9a340" />
-                                <Area type="monotone" dataKey="events" stackId="1" stroke="#517ea8" fill="#517ea840" />
-                                <Area type="monotone" dataKey="markers" stackId="1" stroke="#b86f7a" fill="#b86f7a40" />
-                            </AreaChart>
-                        </ResponsiveContainer>
+                        <span className="quick-action-label">Add News</span>
                     </div>
-
-                    <div className="chart-card">
-                        <h3>Content by Category</h3>
-                        <ResponsiveContainer width="100%" height={300}>
-                            <PieChart>
-                                <Pie
-                                    data={categoryDistribution}
-                                    cx="50%"
-                                    cy="50%"
-                                    innerRadius={60}
-                                    outerRadius={100}
-                                    paddingAngle={2}
-                                    dataKey="value"
-                                >
-                                    {categoryDistribution.map((entry, index) => (
-                                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                                    ))}
-                                </Pie>
-                                <Tooltip />
-                                <Legend />
-                            </PieChart>
-                        </ResponsiveContainer>
+                    <div className="quick-action-card" onClick={() => navigate('/admin/events')}>
+                        <div className="quick-action-icon" style={{ background: '#517ea815', color: '#517ea8' }}>
+                            <i className="fas fa-calendar-plus"></i>
+                        </div>
+                        <span className="quick-action-label">Add Event</span>
+                    </div>
+                    <div className="quick-action-card" onClick={() => navigate('/admin/categories')}>
+                        <div className="quick-action-icon" style={{ background: '#b86f7a15', color: '#b86f7a' }}>
+                            <i className="fas fa-folder-plus"></i>
+                        </div>
+                        <span className="quick-action-label">Manage Categories</span>
                     </div>
                 </div>
-
-                {/* Quick Actions removed - now in sidebar */}
-
-                {/* Recent Content Table */}
-                <div className="recent-content-section">
-                    <div className="section-header">
-                        <h3>Recently Updated Content</h3>
-                        <button className="view-all-btn" onClick={() => navigate('/admin/content')}>
-                            View All <i className="fas fa-arrow-right"></i>
-                        </button>
-                    </div>
-
-                    <div className="table-container">
-                        <table className="content-table">
-                            <thead>
-                                <tr>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Status</th>
-                                    <th>Author</th>
-                                    <th>Last Updated</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {recentContent.map((item) => (
-                                    <tr key={item.id}>
-                                        <td className="content-title">{item.title}</td>
-                                        <td>
-                                            <span className="category-badge">{item.category}</span>
-                                        </td>
-                                        <td>
-                                            <span className={`status-badge ${item.status.toLowerCase()}`}>
-                                                {item.status}
-                                            </span>
-                                        </td>
-                                        <td>{item.author}</td>
-                                        <td>{item.updated}</td>
-                                        <td>
-                                            <div className="action-buttons">
-                                                <button className="action-btn edit" onClick={() => navigate(`/admin/content/edit/${item.id}`)}>
-                                                    <i className="fas fa-edit"></i>
-                                                </button>
-                                                <button className="action-btn view">
-                                                    <i className="fas fa-eye"></i>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </main>
-        </div>
+            </div>
+        </>
     );
 };
 

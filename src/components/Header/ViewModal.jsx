@@ -9,13 +9,20 @@ const ViewModal = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
+    const navItems = ["Home", "About Us", "Contact Us", "News Corner", "Upcoming Events", "Settings"];
+    const validTabs = navItems.map(item => item.toLowerCase().replace(/\s+/g, '-'));
+
     const [scrolled, setScrolled] = useState(false);
-    const [activeTab, setActiveTab] = useState("home");
+    const [activeTab, setActiveTab] = useState(() => {
+        const path = window.location.pathname === "/" ? "home" : window.location.pathname.substring(1);
+        const sectionId = path.split('/')[0];
+        if (window.location.hash) return window.location.hash.substring(1);
+        return validTabs.includes(sectionId) ? sectionId : "home";
+    });
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [languageMenuOpen, setLanguageMenuOpen] = useState(false);
+    const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const settingsRef = useRef(null);
-
-    const navItems = ["Home", "About Us", "Contact Us", "News Corner", "Upcoming Events", "Settings"];
 
     // Settings menu items
     const settingsItems = [
@@ -32,6 +39,10 @@ const ViewModal = () => {
         const handleClickOutside = (event) => {
             if (settingsRef.current && !settingsRef.current.contains(event.target)) {
                 setSettingsOpen(false);
+            }
+            // Close mobile menu if clicked outside header
+            if (mobileMenuOpen && !document.querySelector('.site-header').contains(event.target)) {
+                setMobileMenuOpen(false);
             }
         };
 
@@ -77,19 +88,29 @@ const ViewModal = () => {
         return () => window.removeEventListener("scroll", handleScroll);
     }, [location.pathname, navItems, activeTab]);
 
-    // Handle hash in URL on page load
+    // Sync active tab with URL changes (handles refresh, back/forward, and direct navigation)
     useEffect(() => {
-        if ((location.pathname === "/home" || location.pathname === "/") && location.hash) {
-            const id = location.hash.substring(1);
-            const element = document.getElementById(id);
-            if (element) {
-                setTimeout(() => {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }, 100);
-                setActiveTab(id);
+        const path = location.pathname === "/" ? "home" : location.pathname.substring(1);
+        const sectionId = path.split('/')[0];
+
+        if (location.pathname === "/home" || location.pathname === "/") {
+            const hashId = location.hash.substring(1);
+            if (hashId && validTabs.includes(hashId)) {
+                setActiveTab(hashId);
+                // Scroll to hash element if it exists
+                const element = document.getElementById(hashId);
+                if (element) {
+                    setTimeout(() => {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                }
+            } else {
+                setActiveTab("home");
             }
+        } else if (validTabs.includes(sectionId)) {
+            setActiveTab(sectionId);
         }
-    }, [location]);
+    }, [location.pathname, location.hash]);
 
     const handleNavClick = (item) => {
         const sectionId = item.toLowerCase().replace(/\s+/g, '-');
@@ -99,6 +120,8 @@ const ViewModal = () => {
             setSettingsOpen(!settingsOpen);
             return;
         }
+
+        setMobileMenuOpen(false); // Close mobile menu on click
 
         setActiveTab(sectionId);
 
@@ -159,7 +182,9 @@ const ViewModal = () => {
         navigate,
         languageMenuOpen,
         setLanguageMenuOpen,
-        handleLanguageChange
+        handleLanguageChange,
+        mobileMenuOpen,
+        setMobileMenuOpen
     }
 };
 

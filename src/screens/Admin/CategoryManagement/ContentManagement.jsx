@@ -299,9 +299,6 @@ const CategoryManagement = () => {
                     }}>
                         <i className="fas fa-plus"></i> New Category
                     </button>
-                    <button className="logout-btn-admin" onClick={handleLogout} title="Logout">
-                        <i className="fas fa-sign-out-alt"></i>
-                    </button>
                 </div>
             </div>
 

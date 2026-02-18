@@ -10,18 +10,18 @@ import Manual from "../screens/OnBoarding/Manual/Manual"
 import Finish from "../screens/OnBoarding/Finish/Finish"
 import ForgotPassword from "../screens/Auth/ForgetPassword/ForgotPassword"
 import Home from "../screens/Home/Home"
-import ContentList from "../screens/Home/Content"
-import SearchScreen from "../screens/Home/Searchscreen"
-import Category from "../screens/Home/CategoryDetail/category"
 import NewsCorner from "../screens/Home/NewsCorner/NewsCorner"
 import ReadMore from "../screens/Home/NewsCorner/ReadMore/ReadMore"
 import UpcomingEvents from "../screens/Home/UpcommingEvents/UpcommingEvents"
+import EventReadMore from "../screens/Home/UpcommingEvents/ReadMore/EventReadMore"
 
 // Admin Screens
 import AdminDashboard from "../screens/Admin/Dashboard/Dashboard"
-import AdminContentManagement from "../screens/Admin/ContentManagement/ContentManagement"
 import AdminCategoryManagement from "../screens/Admin/CategoryManagement/ContentManagement"
-import ContentEditor from "../screens/Admin/ContentEditor/ContentEditor"
+import AdminLayout from "../screens/Admin/SideDrawer/AdminLayout"
+import NewsManagement from "../screens/Admin/News/News"
+import EventManagement from "../screens/Admin/Events/Events"
+import Category from "../screens/Home/CategoryDetail/Category"
 
 const ProtectedRoute = ({ children }) => {
     const { token, user } = useSelector((state) => state.auth);
@@ -96,25 +96,18 @@ function Navigation() {
                     <Route path="/onboarding/language" element={<ProtectedRoute><LanguageSelector /></ProtectedRoute>} />
                     <Route path="/onboarding/manual" element={<ProtectedRoute><Manual /></ProtectedRoute>} />
                     <Route path="/onboarding/finish" element={<ProtectedRoute><Finish /></ProtectedRoute>} />
-
-                    {/* Protected App Routes */}
                     <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
                     <Route path="/Category" element={<ProtectedRoute><Category /></ProtectedRoute>} />
-                    <Route path="/content-list" element={<ProtectedRoute><ContentList /></ProtectedRoute>} />
-                    <Route path="/search" element={<ProtectedRoute><SearchScreen /></ProtectedRoute>} />
-
-                    {/* ✅ SIMPLE NAVIGATION - No IDs */}
                     <Route path="/news-corner" element={<ProtectedRoute><NewsCorner /></ProtectedRoute>} />
                     <Route path="/news-corner/ReadMore" element={<ProtectedRoute><ReadMore /></ProtectedRoute>} />
                     <Route path="/upcoming-events" element={<ProtectedRoute><UpcomingEvents /></ProtectedRoute>} />
-                    <Route path="/news-corner/upcoming-events" element={<ProtectedRoute><UpcomingEvents /></ProtectedRoute>} />
+                    <Route path="/upcoming-events/ReadMore" element={<ProtectedRoute><EventReadMore /></ProtectedRoute>} />
 
                     {/* Admin Routes */}
-                    <Route path="/admin/dashboard" element={<AdminRoute><AdminDashboard /></AdminRoute>} />
-                    <Route path="/admin/content" element={<AdminRoute><AdminContentManagement /></AdminRoute>} />
-                    <Route path="/admin/categories" element={<AdminRoute><AdminCategoryManagement /></AdminRoute>} />
-                    <Route path="/admin/ContentEditor" element={<AdminRoute><ContentEditor /></AdminRoute>} />
-
+                    <Route path="/admin/dashboard" element={<AdminRoute><AdminLayout><AdminDashboard /></AdminLayout></AdminRoute>} />
+                    <Route path="/admin/categories" element={<AdminRoute><AdminLayout><AdminCategoryManagement /></AdminLayout></AdminRoute>} />
+                    <Route path="/admin/news" element={<AdminRoute><AdminLayout><NewsManagement /></AdminLayout></AdminRoute>} />
+                    <Route path="/admin/events" element={<AdminRoute><AdminLayout><EventManagement /></AdminLayout></AdminRoute>} />
                 </Routes>
             </Layout>
         </BrowserRouter>

@@ -1,8 +1,8 @@
 /* UpcomingEvents.css */
 .events-container {
-    max-width: 100%;
-    margin: 0 auto;
-    padding: 2rem 2rem 4rem;
+    max-width: 80%;
+    margin: auto !important;
+    padding: 1rem 1rem 4rem;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     background: white;
 }
@@ -133,202 +133,6 @@
     justify-content: center;
 }
 
-/* Featured Event */
-.featured-event {
-    margin-bottom: 4rem;
-    background: linear-gradient(145deg, #ffffff, #f8fafc);
-    border-radius: 32px;
-    overflow: hidden;
-    border: 1px solid #edf2f7;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.04);
-}
-
-.featured-event-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0;
-}
-
-.featured-event-image {
-    position: relative;
-    height: 100%;
-    min-height: 500px;
-}
-
-.featured-event-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.featured-event-badge {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background: rgba(0, 30, 60, 0.85);
-    color: white;
-    padding: 0.4rem 1.2rem;
-    border-radius: 30px;
-    font-size: 0.75rem;
-    font-weight: 600;
-    letter-spacing: 1px;
-    backdrop-filter: blur(4px);
-}
-
-.event-capacity-badge {
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    background: rgba(255, 255, 255, 0.95);
-    color: #001e3c;
-    padding: 0.5rem 1.2rem;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-}
-
-.event-capacity-badge i {
-    color: #38a9a3;
-}
-
-.featured-event-content {
-    padding: 3rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-}
-
-.event-meta-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.event-category {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.4rem 1.2rem;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.event-price {
-    padding: 0.4rem 1.2rem;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
-}
-
-.featured-event-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #001e3c;
-    margin-bottom: 1rem;
-    line-height: 1.3;
-}
-
-.featured-event-excerpt {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: #4b6a7c;
-    margin-bottom: 2rem;
-}
-
-.event-details-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-    padding: 1.5rem;
-    background: #f8fafc;
-    border-radius: 16px;
-}
-
-.event-detail-item {
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-}
-
-.event-detail-item i {
-    font-size: 1.1rem;
-    color: #38a9a3;
-    margin-top: 0.2rem;
-}
-
-.detail-label {
-    display: block;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #6b7a8c;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 0.2rem;
-}
-
-.detail-value {
-    display: block;
-    font-size: 0.9rem;
-    color: #001e3c;
-    font-weight: 500;
-}
-
-.featured-event-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.organizer-info {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-}
-
-.organizer-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid white;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
-}
-
-.organizer-name {
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #4b6a7c;
-}
-
-.register-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.8rem 2rem;
-    background: #38a9a3;
-    color: white;
-    border: none;
-    border-radius: 40px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.register-btn:hover {
-    background: #2c8a85;
-    gap: 1rem;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 16px rgba(56, 169, 163, 0.2);
-}
-
 /* Events Grid */
 .events-grid-section {
     margin-bottom: 4rem;
@@ -363,7 +167,6 @@
 }
 
 .event-card {
-    background: white;
     border-radius: 20px;
     border: 1px solid #edf2f7;
     overflow: hidden;
@@ -388,11 +191,11 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.4s ease;
+    transition: transform 1.9s ease;
 }
 
 .event-card:hover .event-card-image {
-    transform: scale(1.08);
+    transform: scale(1.10);
 }
 
 .event-card-category {
@@ -413,7 +216,7 @@
 
 .event-card-price {
     position: absolute;
-    top: 12px;
+    top: 5px;
     right: 12px;
     background: rgba(0, 30, 60, 0.85);
     color: white;
@@ -422,7 +225,7 @@
     font-size: 0.7rem;
     font-weight: 600;
     backdrop-filter: blur(4px);
-    z-index: 2;
+    z-index: 1;
 }
 
 .event-card-content {
@@ -456,6 +259,7 @@
     line-height: 1.4;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
@@ -469,6 +273,7 @@
     margin-bottom: 0.75rem;
 }
 
+
 .event-card-location i {
     color: #38a9a3;
     font-size: 0.75rem;
@@ -481,6 +286,7 @@
     margin-bottom: 1rem;
     display: -webkit-box;
     -webkit-line-clamp: 2;
+    line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
     flex: 1;
@@ -774,6 +580,10 @@
     .events-grid {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .events-container {
+        max-width: 95%;
+    }
 }
 
 @media (max-width: 1024px) {
@@ -796,15 +606,17 @@
 
 @media (max-width: 768px) {
     .events-container {
-        padding: 1.5rem;
+        max-width: 100%;
+        padding: 1rem 1rem 3rem;
     }
 
     .events-title {
-        font-size: 2.2rem;
+        font-size: 2rem;
     }
 
     .events-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 
     .event-details-grid {
@@ -844,9 +656,36 @@
     .month-btn {
         min-width: 80px;
     }
+
+    .events-newsletter {
+        padding: 2rem 1.5rem;
+        border-radius: 24px;
+    }
+
+    .newsletter-title {
+        font-size: 1.5rem;
+    }
+
+    .grid-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
 }
 
 @media (max-width: 480px) {
+    .events-container {
+        padding: 0.75rem 0.75rem 2rem;
+    }
+
+    .events-title {
+        font-size: 1.6rem;
+    }
+
+    .events-subtitle {
+        font-size: 0.95rem;
+    }
+
     .featured-event-title {
         font-size: 1.5rem;
     }
@@ -869,5 +708,19 @@
         padding: 0.6rem;
         background: #e8f1f0;
         border-radius: 30px;
+    }
+
+    .events-newsletter {
+        padding: 1.5rem 1rem;
+        border-radius: 16px;
+    }
+
+    .host-event-cta {
+        padding: 1.5rem 1rem;
+    }
+
+    .host-event-btn {
+        width: 100%;
+        justify-content: center;
     }
 }

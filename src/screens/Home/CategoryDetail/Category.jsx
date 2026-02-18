@@ -11,6 +11,8 @@ const Category = () => {
   const [subCategories, setSubCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
 
   // Refs for scroll spy - using a mutable object instead of individual useRefs
   const sectionRefs = useRef({});
@@ -26,9 +28,6 @@ const Category = () => {
         if (response.success) {
           setSubCategories(response.data);
           setSubCategories(response.data);
-          // if (response.data.length > 0) {
-          //   setActiveSection(response.data[0]._id);
-          // }
         }
       } catch (error) {
         console.error("Error fetching sub-categories:", error);
@@ -54,73 +53,34 @@ const Category = () => {
     }
   }, [location.pathname, loading, subCategories]);
 
-  // Scroll spy effect - automatically activates sidebar item based on scroll position
-  // Scroll spy effect removed for Master-Detail view
-  // useEffect(() => {
-  //   if (subCategories.length === 0) return;
-  //   const handleScroll = () => { ... };
-  //   window.addEventListener("scroll", handleScroll);
-  //   handleScroll();
-  //   return () => window.removeEventListener("scroll", handleScroll);
-  // }, [subCategories, activeSection]);
 
   const handleNavClick = (id) => {
     setActiveSection(id);
+    setIsSidebarOpen(false); // Close sidebar on selection (for mobile)
     // Scroll behavior removed for Master-Detail view
   };
 
-  // Sample available houses data with real images
-  const availableHouses = [
-    {
-      id: 1,
-      title: "Modern 2-Room Apartment",
-      location: "Nørrebro, Copenhagen",
-      price: "€1,450",
-      size: "68m²",
-      rooms: "2",
-      image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=400&q=80",
-      availability: "Available now",
-      features: ["Balcony", "Elevator", "Pet friendly"]
-    },
-    {
-      id: 2,
-      title: "Cozy Studio in City Center",
-      location: "Indre By, Copenhagen",
-      price: "€1,250",
-      size: "42m²",
-      rooms: "1",
-      image: "https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=400&q=80",
-      availability: "Available from March 1",
-      features: ["Furnished", "High speed internet", "Washer"]
-    },
-    {
-      id: 3,
-      title: "Family Apartment with Balcony",
-      location: "Østerbro, Copenhagen",
-      price: "€2,100",
-      size: "95m²",
-      rooms: "3",
-      image: "https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=400&q=80",
-      availability: "Available now",
-      features: ["Balcony", "Parking", "Dishwasher"]
-    },
-    {
-      id: 4,
-      title: "Luxury Penthouse",
-      location: "Frederiksberg, Copenhagen",
-      price: "€3,200",
-      size: "120m²",
-      rooms: "4",
-      image: "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=400&q=80",
-      availability: "Available April 1",
-      features: ["Roof terrace", "Jacuzzi", "Smart home"]
-    }
-  ];
-
   return (
     <div className="category-container">
+      {/* Mobile Sidebar Toggle - Only visible on mobile */}
+      <button
+        className={`mobile-sidebar-toggle ${isSidebarOpen ? 'active' : ''}`}
+        onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        aria-label="Toggle Sidebar"
+      >
+        <i className={`fas ${isSidebarOpen ? 'fa-times' : 'fa-bars'}`}></i>
+      </button>
+
+      {/* Overlay - Only visible when sidebar is open on mobile */}
+      {isSidebarOpen && (
+        <div
+          className="sidebar-overlay"
+          onClick={() => setIsSidebarOpen(false)}
+        ></div>
+      )}
+
       {/* Left Sidebar - In this section - with elegant spacing */}
-      <div className="section-sidebar">
+      <div className={`section-sidebar ${isSidebarOpen ? 'open' : ''}`}>
         <div className="sidebar-header">
           <h1 className="brand-title">RAHA</h1>
           <div className="brand-underline"></div>
@@ -154,30 +114,43 @@ const Category = () => {
 
       <div className="main-content-full">
         {!activeSection ? (
-          <div className="placeholder-container" style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '100%',
-            minHeight: '100vh',
-            color: '#6b7a8c',
-            textAlign: 'center',
-            padding: '2rem'
-          }}>
-            <img
-              src="https://www.paulkrameronline.com/wp-content/uploads/2018/11/refugees-image.jpg"
-              alt="Select a category"
-              style={{
-                width: '100%',
-                maxWidth: '900px',
-                marginBottom: '2rem',
-                borderRadius: '12px',
-                opacity: 0.8
-              }}
-            />
-            <h2>Select a topic to get started</h2>
-            <p>Choose a sub-category from the menu to view detailed guides and information.</p>
+          <div className="sub-categories-overview">
+            <div className="overview-header">
+              <span className="overview-tag">EXPLORE</span>
+              <h2 className="overview-title">Sub Categories</h2>
+              <div className="overview-divider"></div>
+              <p className="overview-subtitle">
+                Select a sub-category to view detailed information and resources.
+              </p>
+            </div>
+
+            <div className="sub-categories-grid">
+              {subCategories.map((sub) => (
+                <div
+                  key={sub._id}
+                  className="sub-category-card-elegant"
+                  onClick={() => handleNavClick(sub._id)}
+                >
+                  <div className="sub-card-icon-wrapper">
+                    {sub.icon ? (
+                      <img src={sub.icon} alt={sub.name} className="sub-card-icon-img" />
+                    ) : (
+                      <i className="fas fa-info-circle"></i>
+                    )}
+                  </div>
+                  <div className="sub-card-content">
+                    <span className="sub-card-tag">{sub.identifier || 'RESOURCES'}</span>
+                    <h4 className="sub-card-name">{sub.name}</h4>
+                    <p className="sub-card-description">
+                      Click to explore guidelines and helpful information.
+                    </p>
+                    <button className="sub-card-action">
+                      View Details <i className="fas fa-arrow-right"></i>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           subCategories

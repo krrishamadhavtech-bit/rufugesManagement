@@ -2,7 +2,7 @@ import useHeader from "./ViewModal";
 import "./Header.css";
 
 const Header = () => {
-    const { scrolled, activeTab, settingsOpen, settingsRef, navItems, settingsItems, handleNavClick, handleSettingsItemClick, handleLogout, setSettingsOpen, setActiveTab, setScrolled, navigate, languageMenuOpen, setLanguageMenuOpen, handleLanguageChange } = useHeader();
+    const { scrolled, activeTab, settingsOpen, settingsRef, navItems, settingsItems, handleNavClick, handleSettingsItemClick, handleLogout, mobileMenuOpen, setMobileMenuOpen, navigate, languageMenuOpen, setLanguageMenuOpen, handleLanguageChange } = useHeader();
     return (
         <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
             <div className="header-content">
@@ -11,7 +11,10 @@ const Header = () => {
                     <span className="logo-text">RAHA</span>
                 </div>
 
-                <nav className="main-nav">
+
+
+                <nav className={`main-nav ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+
                     {navItems.map((item) => {
                         const itemId = item.toLowerCase().replace(/\s+/g, '-');
                         const isActive = activeTab === itemId && item !== "Settings";
@@ -92,9 +95,19 @@ const Header = () => {
                     })}
                 </nav>
 
-                <button className="donate-header-btn" onClick={handleLogout}>
-                    <i className="fa-solid fa-sign-out"></i>
-                </button>
+                <div className="header-right-actions">
+                    <button className="donate-header-btn" onClick={handleLogout}>
+                        <i className="fa-solid fa-sign-out"></i>
+                    </button>
+                    {/* Mobile Menu Toggle - beside logout */}
+                    <button
+                        className={`mobile-menu-toggle ${mobileMenuOpen ? 'active' : ''}`}
+                        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                        aria-label="Toggle Menu"
+                    >
+                        <i className={`fas ${mobileMenuOpen ? 'fa-times' : 'fa-bars'}`}></i>
+                    </button>
+                </div>
             </div >
         </header >
     );
