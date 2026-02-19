@@ -1,6 +1,6 @@
 /* Header.css - Compact header matching screenshot */
 .site-header {
-    background: white;
+    background: var(--white);
     border-bottom: 1px solid var(--border-color);
     position: fixed;
     top: 0;
@@ -18,6 +18,7 @@
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
     backdrop-filter: blur(10px);
     background: rgba(255, 255, 255, 0.98);
+    /* Uses rgba for partial transparency — cannot replace with var */
 }
 
 .header-content {
@@ -161,7 +162,7 @@ body {
     top: calc(100% + 8px);
     right: 0;
     width: 320px;
-    background: white;
+    background: var(--white);
     border-radius: 16px;
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
     border: 1px solid var(--border-color);
@@ -234,7 +235,7 @@ body {
 
 .settings-menu-item:hover .settings-item-icon {
     background: var(--primary);
-    color: white;
+    color: var(--white);
 }
 
 .settings-item-icon i {
@@ -244,7 +245,7 @@ body {
 }
 
 .settings-menu-item:hover .settings-item-icon i {
-    color: white;
+    color: var(--white);
 }
 
 .settings-item-content {
@@ -286,7 +287,7 @@ body {
     left: -175px;
     /* Slight overlap with parent to prevent gap while moving mouse */
     width: 180px;
-    background: white;
+    background: var(--white);
     border-radius: 12px;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     border: 1px solid var(--border-color);
@@ -415,7 +416,7 @@ body {
         right: -100%;
         width: 300px;
         height: 600vh;
-        background: white;
+        background: var(--white);
         padding: 80px 40px;
         gap: 0;
         box-shadow: -10px 0 30px rgba(0, 0, 0, 0.05);

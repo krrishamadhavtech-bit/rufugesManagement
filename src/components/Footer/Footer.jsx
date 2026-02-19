@@ -31,17 +31,14 @@ const Footer = () => {
                 <div className="footer-links">
                     <div className="footer-column">
                         <h4>Organization</h4>
-                        <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('about'); }}>About Us</a>
-                        <a href="#">Our Team</a>
-                        <a href="#">Careers</a>
-                        <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('contact'); }}>Contact</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('about-us'); }}>About Us</a>
+                        <a href="#" onClick={(e) => { e.preventDefault(); scrollToSection('contact-us'); }}>Contact</a>
                     </div>
                     <div className="footer-column">
-                        <h4>Projects</h4>
-                        <a href="#">Health for All</a>
-                        <a href="#">Clean Water</a>
-                        <a href="#">Eco Hope</a>
-                        <a href="#">Education</a>
+                        <h4>Content</h4>
+                        <a href="#">Categories</a>
+                        <a href="/news-corner">News</a>
+                        <a href="/upcoming-events">Events</a>
                     </div>
                     <div className="footer-column">
                         <h4>Support</h4>

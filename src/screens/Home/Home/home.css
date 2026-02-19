@@ -258,9 +258,8 @@ body {
     background: var(--primary);
     color: white;
     border: none;
-    padding: 16px 36px;
     border-radius: 40px;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s;
@@ -270,14 +269,13 @@ body {
 .btn-primary:hover {
     background: var(--primary-dark);
     transform: translateY(-2px);
-    box-shadow: 0 12px 24px rgba(225, 31, 38, 0.25);
+    box-shadow: 0 12px 24px rgba(149, 215, 222, 0.25);
 }
 
 .btn-outline {
     background: transparent;
     color: var(--secondary);
     border: 2px solid var(--border-color);
-    padding: 16px 36px;
     border-radius: 40px;
     font-weight: 600;
     font-size: 1rem;

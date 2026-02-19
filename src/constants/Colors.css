@@ -1,54 +1,125 @@
 :root {
+    /* ===== PRIMARY ===== */
     --primary: #38a9a3;
     --primary-dark: #38a9a3;
-    --secondary: #001E3C;
+    --primary-hover: #2c8a85;
+    --primary-light: rgba(225, 31, 38, 0.08);
+    --primary-bg: #e8f1f0;
+    --primary-bg-faint: #f0f9f8;
+    --primary-muted: rgba(56, 169, 163, 0.1);
+
+    /* ===== SECONDARY ===== */
+    --secondary: #1E2F4A;
+    --secondary-dark: #001E3C;
+    --secondary-light: #2C4C5C;
+    --secondary-blue: #517ea8;
+
+    /* ===== ACCENT / DANGER ===== */
     --accent: #013A6B;
+    --danger: #b86f7a;
+    --danger-light: #fef2f2;
+    --danger-border: #b86f7a;
+
+    /* ===== NEUTRALS ===== */
     --white: #FFFFFF;
     --black: #000000;
+
+    /* ===== TEXT ===== */
     --text-primary: #1e3b4a;
     --text-secondary: #4b6a7c;
-    --text-light: #829eab;
-    --border-light: rgba(225, 235, 240, 0.8);
-    --background-overlay: rgba(0, 30, 60, 0.55);
-    --link-pink: #ffb3b6;
-    --gradient-start: #9cafce;
-    --gradient-end: #5c94b0;
-    --input-focus-shadow: rgba(225, 31, 38, 0.12);
-    --button-shadow: #48908c;
-    --button-shadow-hover: #48908c;
-
-    --primary-light: rgba(225, 31, 38, 0.08);
-    --secondary: #1E2F4A;
-    /* Danish blue */
-    --secondary-light: #2C4C5C;
-
-    /* Overlay gradient */
-    --overlay-gradient: linear-gradient(135deg, rgba(133, 208, 203, 0.85) 0%, rgba(30, 74, 71, 0.9) 100%);
-
-    /* Text colors */
-    --text-dark: #1A1E24;
     --text-light: #6B7A8C;
+    --text-dark: #1A1E24;
+    --text-muted: #94a3b8;
+    --text-slate: #64748b;
+    --text-dim: #829eab;
 
-    /* Background colors */
+    /* ===== NEWS / MEDIA ===== */
+    --news-red: #cc0000;
+    --news-dark: #1a1a1a;
+    --news-gray: #666;
+    --news-light-gray: #ccc;
+    --news-icon-red: #ff3b3b;
+
+    /* ===== BORDERS ===== */
+    --border-light: rgba(225, 235, 240, 0.8);
+    --border-color: #E9ECEF;
+    --border-subtle: #edf2f7;
+    --border-soft: #e2e8f0;
+    --border-faint: #f1f5f9;
+    --border-input: #e2e8f0;
+
+    /* ===== BACKGROUNDS ===== */
     --background: #FFFFFF;
+    --background-overlay: rgba(0, 30, 60, 0.55);
     --gray-bg: #F9FBFD;
     --gray-light: #F5F7FA;
-    --border-color: #E9ECEF;
+    --bg-light: #f8fafc;
+    --bg-faint: #f9fbfd;
+    --bg-neutral: #eef2f6;
+    --bg-hover: #fafafa;
+    --bg-stripe: #f5f7fa;
 
-    /* Shadows */
+    /* ===== GRADIENTS ===== */
+    --gradient-start: #9cafce;
+    --gradient-end: #5c94b0;
+    --overlay-gradient: linear-gradient(135deg, rgba(133, 208, 203, 0.85) 0%, rgba(30, 74, 71, 0.9) 100%);
+
+    /* ===== SHADOWS ===== */
     --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.02);
     --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.06);
     --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.08);
+    --input-focus-shadow: rgba(137, 204, 196, 0.12);
 
-    /* Alerts / Feedback */
+    /* ===== BUTTON ===== */
+    --button-shadow: #48908c;
+    --button-shadow-hover: #48908c;
+
+    /* ===== LINKS ===== */
+    --link-pink: #ffb3b6;
+
+    /* ===== ALERTS / FEEDBACK ===== */
     --error: #e53e3e;
     --error-bg: #fff5f5;
     --error-border: #fed7d7;
     --success: #38a169;
     --success-bg: #f0fff4;
     --success-border: #c6f6d5;
+    --warning: #b86f7a;
+    --warning-bg: #fef2f2;
+    --warning-border: #b86f7a;
 
-    /* Border radius */
+    /* ===== STATUS ===== */
+    --status-active: #38a9a3;
+    --status-inactive: #b86f7a;
+
+    /* SEO Colors (keep as-is for semantic accuracy) */
+    --seo-url: #006621;
+    --seo-title: #1a0dab;
+    --seo-text: #545454;
+
+    /* ===== BORDER RADIUS ===== */
     --border-radius: 24px;
     --border-radius-sm: 12px;
+
+    /* ===== ORANGE ACCENT ===== */
+    --accent-orange: #f5a97f;
+
+    /* ===== TAG COLORS ===== */
+    --tag-bg: #f0f4f8;
+    --tag-bg-slate: #f8fafc;
+
+    /* ===== TOGGLE ===== */
+    --toggle-off: #e2e8f0;
+    --toggle-on: #38a9a3;
+
+    /* ===== GREEN (success variant) ===== */
+    --green-primary: #38a169;
+    --green-dark: #2e7d32;
+    --green-darker: #1b5e20;
+
+    /* ===== MISC ===== */
+    --map-bg: #eef2f6;
+    --delete-bg: #dc3545;
+    --newsletter-bg-start: #001e3c;
+    --newsletter-bg-end: #012b4a;
 }

@@ -4,7 +4,7 @@
     margin: 0 auto;
     padding: 1rem 1rem 4rem;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    background: white;
+    background: var(--white);
 }
 
 .news-header {
@@ -17,7 +17,7 @@
     display: inline-block;
     font-size: 0.8rem;
     font-weight: 700;
-    color: #cc0000;
+    color: var(--news-red);
     text-transform: uppercase;
     margin-bottom: 0.5rem;
 }
@@ -25,14 +25,14 @@
 .news-title {
     font-size: 1.8rem;
     font-weight: 800;
-    color: #000;
+    color: var(--black);
     margin: 0;
 }
 
 .news-divider {
     width: 40px;
     height: 3px;
-    background: #cc0000;
+    background: var(--news-red);
     margin-top: 0.5rem;
 }
 
@@ -48,11 +48,11 @@
     cursor: pointer;
     transition: background 0.2s;
     padding: 0.5rem 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: 1px solid var(--border-faint);
 }
 
 .horizontal-news-card:hover {
-    background: #fafafa;
+    background: var(--bg-hover);
 }
 
 .news-card-image-box {
@@ -76,7 +76,7 @@
 .news-card-title {
     font-size: 1.15rem;
     font-weight: 700;
-    color: #1a1a1a;
+    color: var(--news-dark);
     line-height: 1.4;
     margin: 0;
     display: -webkit-box;
@@ -87,7 +87,7 @@
 }
 
 .camera-badge {
-    color: #ff3b3b;
+    color: var(--news-icon-red);
     margin-right: 8px;
     font-size: 1rem;
     display: inline-flex;

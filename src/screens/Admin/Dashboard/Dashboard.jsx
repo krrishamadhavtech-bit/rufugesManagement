@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-    BarChart, Bar, LineChart, Line, PieChart, Pie, Cell,
-    XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
-    Area, AreaChart
-} from 'recharts';
 import "../style.css";
 import "../SideDrawer/sidebar.css";
 
@@ -23,17 +18,15 @@ const AdminDashboard = () => {
         totalContent: 0
     });
 
-    const [categoryData, setCategoryData] = useState([]);
-    const [trendData, setTrendData] = useState([]);
-
     useEffect(() => {
         const loadDashboardData = async () => {
             setLoading(true);
             try {
                 // Fetch basic entities
-                const newsRes = await fetchNews();
-                const eventsRes = await fetchEvents();
-                const categoriesRes = await fetchCategories();
+                // Fetch basic entities with large limit for stats
+                const newsRes = await fetchNews(1, 1000);
+                const eventsRes = await fetchEvents(1, 1000);
+                const categoriesRes = await fetchCategories(1, 1000);
 
                 // Robust check for data arrays
                 const news = (newsRes.statusCode === 200 || newsRes.success) ? newsRes.data : (Array.isArray(newsRes) ? newsRes : []);
@@ -58,13 +51,7 @@ const AdminDashboard = () => {
                     totalContent: news.length + events.length
                 });
 
-                // Distribution for Pie Chart
-                setCategoryData([
-                    { name: 'News', value: news.length },
-                    { name: 'Events', value: events.length },
-                    { name: 'Categories', value: categories.length },
-                    { name: 'Sub-Categories', value: totalSub }
-                ]);
+               
 
                 // Generate last 7 days trend data using local date comparison
                 const last7Days = [];
@@ -105,7 +92,6 @@ const AdminDashboard = () => {
                         events: eventCount
                     });
                 }
-                setTrendData(last7Days);
 
             } catch (error) {
                 console.error("Error loading dashboard data:", error);

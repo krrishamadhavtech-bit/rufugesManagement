@@ -9,7 +9,7 @@ import LanguageSelector from "../screens/OnBoarding/LanguageSelector/LanguageSel
 import Manual from "../screens/OnBoarding/Manual/Manual"
 import Finish from "../screens/OnBoarding/Finish/Finish"
 import ForgotPassword from "../screens/Auth/ForgetPassword/ForgotPassword"
-import Home from "../screens/Home/Home"
+import Home from "../screens/Home/Home/Home"
 import NewsCorner from "../screens/Home/NewsCorner/NewsCorner"
 import ReadMore from "../screens/Home/NewsCorner/ReadMore/ReadMore"
 import UpcomingEvents from "../screens/Home/UpcommingEvents/UpcommingEvents"
@@ -22,6 +22,7 @@ import AdminLayout from "../screens/Admin/SideDrawer/AdminLayout"
 import NewsManagement from "../screens/Admin/News/News"
 import EventManagement from "../screens/Admin/Events/Events"
 import Category from "../screens/Home/CategoryDetail/Category"
+import CategoryList from "../screens/Home/Home/CategoryList/CategoryList"
 
 const ProtectedRoute = ({ children }) => {
     const { token, user } = useSelector((state) => state.auth);
@@ -97,6 +98,7 @@ function Navigation() {
                     <Route path="/onboarding/manual" element={<ProtectedRoute><Manual /></ProtectedRoute>} />
                     <Route path="/onboarding/finish" element={<ProtectedRoute><Finish /></ProtectedRoute>} />
                     <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>} />
+                    <Route path="/CategoryList" element={<ProtectedRoute><CategoryList /></ProtectedRoute>} />
                     <Route path="/Category" element={<ProtectedRoute><Category /></ProtectedRoute>} />
                     <Route path="/news-corner" element={<ProtectedRoute><NewsCorner /></ProtectedRoute>} />
                     <Route path="/news-corner/ReadMore" element={<ProtectedRoute><ReadMore /></ProtectedRoute>} />

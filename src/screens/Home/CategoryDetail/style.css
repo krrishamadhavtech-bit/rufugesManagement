@@ -6,8 +6,8 @@
     gap: 4rem;
     padding: 10px;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-    color: #1a1e24;
-    background: white;
+    color: var(--text-dark);
+    background: var(--white);
 }
 
 
@@ -29,7 +29,7 @@
 .brand-title {
     font-size: 2rem;
     font-weight: 700;
-    color: #001e3c;
+    color: var(--secondary-dark);
     letter-spacing: -0.5px;
     margin: 0 0 0.5rem 0;
 }
@@ -37,14 +37,14 @@
 .brand-underline {
     width: 40px;
     height: 3px;
-    background: #38a9a3;
+    background: var(--primary);
     border-radius: 2px;
 }
 
 .sidebar-title {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #6b7a8c;
+    color: var(--text-light);
     margin-bottom: 1.5rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -64,7 +64,7 @@
     padding: 0.9rem 1.2rem;
     margin-bottom: 0.5rem;
     border-radius: 16px;
-    color: #4b6a7c;
+    color: var(--text-secondary);
     font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
@@ -81,23 +81,23 @@
 
 .nav-item i {
     font-size: 1rem;
-    color: #6b7a8c;
+    color: var(--text-light);
 }
 
 .nav-item:hover {
-    background: #f5f7fa;
-    color: #1e3b4a;
+    background: var(--gray-light);
+    color: var(--text-primary);
 }
 
 .nav-item.active {
-    background: #e8f1f0;
-    color: #38a9a3;
+    background: var(--primary-bg);
+    color: var(--primary);
     font-weight: 600;
     box-shadow: 0 6px 12px rgba(56, 169, 163, 0.08);
 }
 
 .nav-item.active i {
-    color: #38a9a3;
+    color: var(--primary);
 }
 
 .nav-active-indicator {
@@ -114,13 +114,13 @@
 
 .nav-active-indicator i {
     font-size: 0.75rem;
-    color: #38a9a3 !important;
+    color: var(--primary) !important;
 }
 
 .sidebar-decoration {
     margin-top: auto;
     padding: 1.5rem 0;
-    border-top: 1px solid #edf2f7;
+    border-top: 1px solid var(--border-subtle);
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -129,7 +129,7 @@
 .decoration-icon {
     width: 48px;
     height: 48px;
-    background: #f5fafc;
+    background: var(--bg-faint);
     border-radius: 16px;
     display: flex;
     align-items: center;
@@ -138,7 +138,7 @@
 
 .decoration-icon i {
     font-size: 1.5rem;
-    color: #38a9a3;
+    color: var(--primary);
 }
 
 .nav-icon-img {
@@ -156,13 +156,13 @@
 .decoration-text p {
     font-size: 0.9rem;
     font-weight: 600;
-    color: #1e3b4a;
+    color: var(--text-primary);
     margin: 0 0 0.2rem 0;
 }
 
 .decoration-text span {
     font-size: 0.75rem;
-    color: #6b7a8c;
+    color: var(--text-light);
 }
 
 /* ========== MAIN CONTENT - ELEGANT SPACING ========== */
@@ -180,7 +180,7 @@
 .hero-badge {
     font-size: 0.7rem;
     font-weight: 600;
-    color: #38a9a3;
+    color: var(--primary);
     text-transform: uppercase;
     letter-spacing: 2px;
     margin-bottom: 1rem;
@@ -189,7 +189,7 @@
 .hero-title-elegant {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #001e3c;
+    color: var(--secondary-dark);
     margin-bottom: 1.25rem;
     line-height: 1.2;
 }
@@ -197,7 +197,7 @@
 .hero-divider {
     width: 60px;
     height: 4px;
-    background: #38a9a3;
+    background: var(--primary);
     border-radius: 2px;
     margin-bottom: 1.5rem;
 }
@@ -205,17 +205,17 @@
 .hero-text-elegant p {
     font-size: 1.1rem;
     line-height: 1.7;
-    color: #4b6a7c;
+    color: var(--text-secondary);
     max-width: 800px;
 }
 
 /* Market Map - Elegant Card */
 .market-map-elegant {
     margin-bottom: 3.5rem;
-    background: white;
+    background: var(--white);
     border-radius: 24px;
     padding: 2rem;
-    border: 1px solid #edf2f7;
+    border: 1px solid var(--border-subtle);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
 }
 
@@ -229,7 +229,7 @@
 .market-icon-wrapper {
     width: 56px;
     height: 56px;
-    background: #e8f1f0;
+    background: var(--primary-bg);
     border-radius: 18px;
     display: flex;
     align-items: center;
@@ -238,7 +238,7 @@
 
 .market-icon-wrapper i {
     font-size: 1.75rem;
-    color: #38a9a3;
+    color: var(--primary);
 }
 
 .market-title-wrapper {
@@ -249,7 +249,7 @@
 .market-subtitle {
     font-size: 0.7rem;
     font-weight: 600;
-    color: #6b7a8c;
+    color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-bottom: 0.25rem;
@@ -258,7 +258,7 @@
 .market-title-wrapper h3 {
     font-size: 1.5rem;
     font-weight: 600;
-    color: #001e3c;
+    color: var(--secondary-dark);
     margin: 0;
 }
 
@@ -278,7 +278,7 @@
 .market-stat-value {
     font-size: 2rem;
     font-weight: 700;
-    color: #001e3c;
+    color: var(--secondary-dark);
     line-height: 1.2;
     margin-bottom: 0.25rem;
 }
@@ -286,7 +286,7 @@
 .market-stat-label {
     font-size: 0.75rem;
     font-weight: 600;
-    color: #6b7a8c;
+    color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 0.15rem;
@@ -294,13 +294,13 @@
 
 .market-stat-desc {
     font-size: 0.7rem;
-    color: #94a3b8;
+    color: var(--text-muted);
 }
 
 .market-stat-divider {
     width: 1px;
     height: 40px;
-    background: #e2e8f0;
+    background: var(--border-soft);
     margin: 0 1.5rem;
 }
 
@@ -309,17 +309,17 @@
     align-items: center;
     gap: 0.5rem;
     padding-top: 1.25rem;
-    border-top: 1px solid #edf2f7;
+    border-top: 1px solid var(--border-subtle);
 }
 
 .market-map-footer i {
-    color: #38a9a3;
+    color: var(--primary);
     font-size: 0.85rem;
 }
 
 .market-map-footer p {
     font-size: 0.85rem;
-    color: #6b7a8c;
+    color: var(--text-light);
     margin: 0;
 }
 
@@ -371,7 +371,7 @@
 .title-wrapper h3 {
     font-size: 1.6rem;
     font-weight: 600;
-    color: #001e3c;
+    color: var(--secondary-dark);
     margin: 0;
 }
 
@@ -400,21 +400,21 @@
     display: block;
     font-size: 1.75rem;
     font-weight: 700;
-    color: #001e3c;
+    color: var(--secondary-dark);
     margin-bottom: 0.25rem;
 }
 
 .stat-description-elegant {
     font-size: 1rem;
     line-height: 1.5;
-    color: #4b6a7c;
+    color: var(--text-secondary);
     margin: 0;
 }
 
 .section-description-elegant p {
     font-size: 1.05rem;
     line-height: 1.7;
-    color: #4b6a7c;
+    color: var(--text-secondary);
     margin-bottom: 2rem;
 }
 
@@ -449,7 +449,7 @@
 .column-header h4 {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #001e3c;
+    color: var(--secondary-dark);
     margin: 0;
 }
 
@@ -465,7 +465,7 @@
     gap: 0.75rem;
     margin-bottom: 1rem;
     font-size: 0.95rem;
-    color: #4b6a7c;
+    color: var(--text-secondary);
     line-height: 1.5;
 }
 
@@ -485,12 +485,12 @@
 }
 
 .resource-card {
-    background: white;
-    border: 1px solid #edf2f7;
+    background: var(--white);
+    border: 1px solid var(--border-subtle);
     padding: 0.6rem 1.25rem;
     border-radius: 40px;
     font-size: 0.9rem;
-    color: #4b6a7c;
+    color: var(--text-secondary);
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -499,9 +499,9 @@
 }
 
 .resource-card:hover {
-    background: #38a9a3;
-    border-color: #38a9a3;
-    color: white;
+    background: var(--primary);
+    border-color: var(--primary);
+    color: var(--white);
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(56, 169, 163, 0.12);
 }
@@ -514,7 +514,7 @@
     display: inline-flex;
     align-items: center;
     gap: 1rem;
-    color: #38a9a3;
+    color: var(--primary);
     font-weight: 600;
     font-size: 0.9rem;
     text-transform: uppercase;
@@ -527,7 +527,7 @@
 .arrow-circle {
     width: 32px;
     height: 32px;
-    background: #e8f1f0;
+    background: var(--primary-bg);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -536,26 +536,26 @@
 }
 
 .action-link-elegant:hover .arrow-circle {
-    background: #38a9a3;
+    background: var(--primary);
     transform: translateX(6px);
 }
 
 .action-link-elegant:hover .arrow-circle i {
-    color: white;
+    color: var(--white);
 }
 
 /* Available Houses - Elegant Grid */
 .available-houses-elegant {
     margin-bottom: 3.5rem;
     padding-top: 1.5rem;
-    border-top: 1px solid #edf2f7;
+    border-top: 1px solid var(--border-subtle);
 }
 
 .view-all-elegant {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    color: #38a9a3;
+    color: var(--primary);
     text-decoration: none;
     font-size: 0.9rem;
     font-weight: 500;
@@ -565,7 +565,7 @@
 }
 
 .view-all-elegant:hover {
-    background: #e8f1f0;
+    background: var(--primary-bg);
     gap: 1rem;
 }
 
@@ -577,9 +577,9 @@
 }
 
 .house-card-elegant {
-    background: white;
+    background: var(--white);
     border-radius: 20px;
-    border: 1px solid #edf2f7;
+    border: 1px solid var(--border-subtle);
     overflow: hidden;
     transition: all 0.3s ease;
 }
@@ -587,7 +587,7 @@
 .house-card-elegant:hover {
     transform: translateY(-6px);
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.06);
-    border-color: #38a9a3;
+    border-color: var(--primary);
 }
 
 .house-image-wrapper {
@@ -627,13 +627,13 @@
 .house-title {
     font-size: 1rem;
     font-weight: 600;
-    color: #001e3c;
+    color: var(--secondary-dark);
     margin: 0 0 0.5rem 0;
 }
 
 .house-location {
     font-size: 0.8rem;
-    color: #6b7a8c;
+    color: var(--text-light);
     margin: 0 0 1rem 0;
     display: flex;
     align-items: center;
@@ -646,7 +646,7 @@
     justify-content: space-between;
     margin-bottom: 1rem;
     padding-bottom: 1rem;
-    border-bottom: 1px solid #edf2f7;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .house-spec {
@@ -654,13 +654,13 @@
     align-items: center;
     gap: 0.35rem;
     font-size: 0.8rem;
-    color: #4b6a7c;
+    color: var(--text-secondary);
 }
 
 .house-price {
     font-size: 1rem;
     font-weight: 700;
-    color: #38a9a3;
+    color: var(--primary);
 }
 
 .house-features-elegant {
@@ -671,18 +671,18 @@
 }
 
 .feature-tag-elegant {
-    background: #f5f7fa;
+    background: var(--gray-light);
     padding: 0.25rem 0.75rem;
     border-radius: 30px;
     font-size: 0.7rem;
-    color: #4b6a7c;
+    color: var(--text-secondary);
 }
 
 .view-details-elegant {
     width: 100%;
-    background: white;
-    border: 1px solid #38a9a3;
-    color: #38a9a3;
+    background: var(--white);
+    border: 1px solid var(--primary);
+    color: var(--primary);
     padding: 0.6rem;
     border-radius: 40px;
     font-size: 0.8rem;
@@ -696,16 +696,16 @@
 }
 
 .view-details-elegant:hover {
-    background: #38a9a3;
-    color: white;
+    background: var(--primary);
+    color: var(--white);
 }
 
 /* Quick Tips - Elegant Card */
 .quick-tips-elegant {
-    background: white;
+    background: var(--white);
     border-radius: 24px;
     padding: 2rem;
-    border: 1px solid #edf2f7;
+    border: 1px solid var(--border-subtle);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02);
     margin-top: 1rem;
 }
@@ -738,7 +738,7 @@
 .tips-subtitle {
     font-size: 0.7rem;
     font-weight: 600;
-    color: #6b7a8c;
+    color: var(--text-light);
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-bottom: 0.25rem;
@@ -747,7 +747,7 @@
 .tips-title-wrapper h4 {
     font-size: 1.2rem;
     font-weight: 600;
-    color: #001e3c;
+    color: var(--secondary-dark);
     margin: 0;
 }
 
@@ -762,10 +762,10 @@
     align-items: center;
     gap: 0.75rem;
     padding: 0.75rem 1rem;
-    background: #f8fafc;
+    background: var(--bg-light);
     border-radius: 12px;
     font-size: 0.9rem;
-    color: #4b6a7c;
+    color: var(--text-secondary);
 }
 
 .tip-card i {
@@ -785,7 +785,7 @@
 .overview-tag {
     font-size: 0.8rem;
     font-weight: 700;
-    color: #38a9a3;
+    color: var(--primary);
     letter-spacing: 2.5px;
     text-transform: uppercase;
     margin-bottom: 1rem;
@@ -795,21 +795,21 @@
 .overview-title {
     font-size: 2.75rem;
     font-weight: 800;
-    color: #001e3c;
+    color: var(--secondary-dark);
     margin-bottom: 1.5rem;
 }
 
 .overview-divider {
     width: 60px;
     height: 4px;
-    background: #38a9a3;
+    background: var(--primary);
     border-radius: 2px;
     margin: 0 auto 2rem;
 }
 
 .overview-subtitle {
     font-size: 1.15rem;
-    color: #4b6a7c;
+    color: var(--text-secondary);
     max-width: 650px;
     margin: 0 auto;
     line-height: 1.7;
@@ -823,9 +823,9 @@
 }
 
 .sub-category-card-elegant {
-    background: white;
+    background: var(--white);
     border-radius: 28px;
-    border: 1px solid #f1f5f9;
+    border: 1px solid var(--border-faint);
     padding: 1rem 1.5rem;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
     cursor: pointer;
@@ -844,7 +844,7 @@
     left: 0;
     width: 100%;
     height: 6px;
-    background: #38a9a3;
+    background: var(--primary);
     transform: scaleX(0);
     transform-origin: left;
     transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -863,7 +863,7 @@
 .sub-card-icon-wrapper {
     width: 72px;
     height: 72px;
-    background: #f0f9f8;
+    background: var(--primary-bg-faint);
     border-radius: 22px;
     display: flex;
     align-items: center;
@@ -873,18 +873,18 @@
 }
 
 .sub-category-card-elegant:hover .sub-card-icon-wrapper {
-    background: #38a9a3;
+    background: var(--primary);
     transform: rotate(-5deg) scale(1.05);
 }
 
 .sub-card-icon-wrapper i {
     font-size: 2rem;
-    color: #38a9a3;
+    color: var(--primary);
     transition: color 0.3s ease;
 }
 
 .sub-category-card-elegant:hover .sub-card-icon-wrapper i {
-    color: white;
+    color: var(--white);
 }
 
 .sub-card-icon-img {
@@ -896,7 +896,7 @@
 .sub-card-tag {
     font-size: 0.75rem;
     font-weight: 700;
-    color: #64748b;
+    color: var(--text-slate);
     text-transform: uppercase;
     letter-spacing: 1.5px;
     margin-bottom: 0.75rem;
@@ -905,14 +905,14 @@
 .sub-card-name {
     font-size: 1rem;
     font-weight: 700;
-    color: #001e3c;
+    color: var(--secondary-dark);
     margin-bottom: 1.25rem;
 }
 
 .sub-card-description {
     font-size: 1.2rem;
     line-height: 1.6;
-    color: #64748b;
+    color: var(--text-slate);
     margin-bottom: 2.5rem;
     flex-grow: 1;
 }
@@ -923,7 +923,7 @@
     gap: 0.75rem;
     background: none;
     border: none;
-    color: #38a9a3;
+    color: var(--primary);
     font-weight: 700;
     font-size: 1rem;
     padding: 0;
@@ -957,8 +957,8 @@
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    background: #38a9a3;
-    color: white;
+    background: var(--primary);
+    color: var(--white);
     border: none;
     box-shadow: 0 8px 24px rgba(56, 169, 163, 0.4);
     z-index: 2000;
@@ -970,7 +970,7 @@
 }
 
 .mobile-sidebar-toggle.active {
-    background: #001e3c;
+    background: var(--secondary-dark);
     transform: rotate(90deg);
 }
 
@@ -1030,7 +1030,7 @@
         left: -320px;
         width: 300px;
         height: 100vh;
-        background: white;
+        background: var(--white);
         z-index: 1600;
         padding: 2rem;
         box-shadow: 10px 0 30px rgba(0, 0, 0, 0.1);

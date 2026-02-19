@@ -2,14 +2,14 @@
 .admin-container {
     display: flex;
     min-height: 100vh;
-    background-color: #f8fafc;
+    background-color: var(--bg-light);
 }
 
 /* Sidebar Styles */
 .admin-sidebar {
     width: 280px;
-    background: white;
-    border-right: 1px solid #edf2f7;
+    background: var(--white);
+    border-right: 1px solid var(--border-subtle);
     position: fixed;
     top: 0;
     left: 0;
@@ -25,13 +25,13 @@
     display: flex;
     align-items: center;
     padding: 0 1.5rem;
-    border-bottom: 1px solid #edf2f7;
+    border-bottom: 1px solid var(--border-subtle);
 }
 
 .sidebar-brand {
     font-size: 1.5rem;
     font-weight: 800;
-    color: #38a9a3;
+    color: var(--primary);
     letter-spacing: -0.5px;
     display: flex;
     align-items: center;
@@ -53,7 +53,7 @@
     align-items: center;
     gap: 1rem;
     padding: 0.85rem 1rem;
-    color: #64748b;
+    color: var(--text-slate);
     text-decoration: none;
     border-radius: 12px;
     margin-bottom: 0.5rem;
@@ -63,13 +63,13 @@
 }
 
 .menu-item:hover {
-    background: #f1f5f9;
-    color: #0f172a;
+    background: var(--gray-light);
+    color: var(--secondary-dark);
 }
 
 .menu-item.active {
-    background: #eefdfd;
-    color: #38a9a3;
+    background: var(--primary-bg);
+    color: var(--primary);
 }
 
 .menu-item i {
@@ -84,8 +84,8 @@
 
 .sidebar-footer {
     padding: 1.5rem;
-    border-top: 1px solid #edf2f7;
-    background: #f8fafc;
+    border-top: 1px solid var(--border-subtle);
+    background: var(--bg-light);
 }
 
 .user-profile {
@@ -94,16 +94,16 @@
     gap: 0.75rem;
     padding: 0.5rem;
     border-radius: 12px;
-    background: white;
-    border: 1px solid #e2e8f0;
+    background: var(--white);
+    border: 1px solid var(--border-soft);
 }
 
 .user-avatar {
     width: 40px;
     height: 40px;
-    background: #38a9a3;
+    background: var(--primary);
     border-radius: 50%;
-    color: white;
+    color: var(--white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,7 +119,7 @@
     display: block;
     font-size: 0.9rem;
     font-weight: 600;
-    color: #0f172a;
+    color: var(--secondary-dark);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -128,7 +128,7 @@
 .user-role {
     display: block;
     font-size: 0.75rem;
-    color: #64748b;
+    color: var(--text-slate);
 }
 
 /* Main Content Adjustment */
@@ -137,7 +137,7 @@
     margin-left: 280px;
     /* Width of sidebar */
     padding: 2rem;
-    background: #f8fafc;
+    background: var(--bg-light);
     min-height: 100vh;
     width: calc(100% - 280px);
 }

@@ -13,6 +13,7 @@ const NewsManagement = () => {
     const [newsList, setNewsList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const [visibleCount, setVisibleCount] = useState(10);
 
     const handleLogout = () => {
         dispatch(logout());
@@ -25,6 +26,7 @@ const NewsManagement = () => {
             const response = await fetchNews();
             if (response.statusCode === 200) {
                 setNewsList(response.data);
+                setVisibleCount(10);
             }
         } catch (error) {
             console.error("Failed to load news:", error);
@@ -357,7 +359,7 @@ const NewsManagement = () => {
                             <tr><td colSpan="7" style={{ textAlign: 'center', padding: '2rem' }}>Loading news...</td></tr>
                         ) : newsList.length === 0 ? (
                             <tr><td colSpan="7" style={{ textAlign: 'center', padding: '2rem' }}>No news found</td></tr>
-                        ) : newsList.map((news, index) => (
+                        ) : newsList.slice(0, visibleCount).map((news, index) => (
                             <tr key={news._id}>
                                 <td>{index + 1}</td>
                                 <td>{news.date ? new Date(news.date).toLocaleDateString() : 'N/A'}</td>
@@ -379,7 +381,18 @@ const NewsManagement = () => {
                         ))}
                     </tbody>
                 </table>
+
             </div>
+            {!loading && (
+                <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
+                    <button
+                        className="btn-primary"
+                        onClick={() => setVisibleCount(prev => prev + 10)}
+                    >
+                        Load More
+                    </button>
+                </div>
+            )}
 
             {showDeleteModal && (
                 <div className="modal-overlay" style={{ zIndex: 10000 }}>

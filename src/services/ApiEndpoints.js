@@ -1,4 +1,4 @@
-export const API_URL = "http://192.168.1.17:8000";
+export const API_URL = "http://192.168.1.11:8000";
 
 export const AUTH_ENDPOINTS = {
     REGISTER: `${API_URL}/api/v1/auth/register`,

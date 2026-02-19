@@ -13,7 +13,7 @@ const UpcomingEvents = () => {
     const [activeMonth, setActiveMonth] = useState("all");
     const [events, setEvents] = useState([]);
     const [loading, setLoading] = useState(true);
-
+    const [visibleCount, setVisibleCount] = useState(10);
     const categories = [
         { id: "all", name: "All Events", icon: "fa-calendar" },
         { id: "workshop", name: "Workshops", icon: "fa-chalkboard-user" },
@@ -45,6 +45,7 @@ const UpcomingEvents = () => {
             if (response.statusCode === 200) {
                 // Filter only active events
                 setEvents(response.data.filter(e => e.isActive !== false));
+                setVisibleCount(10);
             }
         } catch (error) {
             console.error("Failed to load events:", error);
@@ -155,7 +156,7 @@ const UpcomingEvents = () => {
                 </div>
 
                 <div className="events-grid">
-                    {filteredEvents.map((event) => (
+                    {filteredEvents.slice(0, visibleCount).map((event) => (
                         <div key={event._id} className="event-card" onClick={() => handleEventClick(event)} style={{ cursor: 'pointer' }}>
                             <div className="event-card-image-wrapper">
                                 <img src={event.image?.url || defaultImage} alt={getLocalized(event, 'title')} className="event-card-image" />
@@ -192,8 +193,18 @@ const UpcomingEvents = () => {
                             </div>
                         </div>
                     ))}
+                            {!loading && (
+                    <div style={{ textAlign: "center", marginTop: "1.5rem", alignContent: 'center' }}>
+                        <button
+                            className="btn-primary"
+                            onClick={() => setVisibleCount(prev => prev + 10)}
+                        >
+                            Load More
+                        </button>
+                    </div>
+                )}
                 </div>
-
+        
                 {filteredEvents.length === 0 && (
                     <div className="no-results">
                         <i className="fas fa-calendar-times"></i>

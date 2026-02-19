@@ -11,6 +11,8 @@ const NewsCorner = () => {
 
     const [newsArticles, setNewsArticles] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [visibleCount, setVisibleCount] = useState(10);
+    
 
     const loadNews = async () => {
         setLoading(true);
@@ -18,6 +20,7 @@ const NewsCorner = () => {
             const response = await fetchNews();
             if (response.statusCode === 200) {
                 setNewsArticles(response.data.filter(item => item.active !== false));
+                setVisibleCount(10);
             }
         } catch (error) {
             console.error("Failed to fetch news:", error);
@@ -59,7 +62,7 @@ const NewsCorner = () => {
             </div>
 
             <div className="news-feed">
-                {newsArticles.map((article, index) => (
+                {newsArticles.slice(0, visibleCount).map((article, index) => (
                     <div
                         key={article._id}
                         className="horizontal-news-card"
@@ -75,8 +78,18 @@ const NewsCorner = () => {
                         </div>
                     </div>
                 ))}
+                
             </div>
-
+      {!loading && (
+                        <div style={{ textAlign: "center", marginTop: "1.5rem" ,alignContent:'center'}}>
+                            <button
+                                className="btn-primary"
+                                onClick={() => setVisibleCount(prev => prev + 10)}
+                            >
+                                Load More
+                            </button>
+                        </div>
+                    )}
             {newsArticles.length === 0 && !loading && (
                 <div className="no-results" style={{ textAlign: 'center', padding: '4rem 0' }}>
                     <i className="fas fa-newspaper" style={{ fontSize: '3rem', color: '#cbd5e1', marginBottom: '1rem', display: 'block' }}></i>

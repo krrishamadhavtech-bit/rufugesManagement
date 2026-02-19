@@ -13,6 +13,7 @@ const EventManagement = () => {
     const [eventList, setEventList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
+    const [visibleCount, setVisibleCount] = useState(10);
 
     const handleLogout = () => {
         dispatch(logout());
@@ -25,6 +26,7 @@ const EventManagement = () => {
             const response = await fetchEvents();
             if (response.statusCode === 200) {
                 setEventList(response.data);
+                setVisibleCount(10);
             }
         } catch (error) {
             console.error("Failed to load events:", error);
@@ -305,7 +307,7 @@ const EventManagement = () => {
                             <tr><td colSpan="7" style={{ textAlign: 'center', padding: '2rem' }}>Loading events...</td></tr>
                         ) : eventList.length === 0 ? (
                             <tr><td colSpan="7" style={{ textAlign: 'center', padding: '2rem' }}>No events found</td></tr>
-                        ) : eventList.map((event, index) => (
+                        ) : eventList.slice(0, visibleCount).map((event, index) => (
                             <tr key={event._id}>
                                 <td>{index + 1}</td>
                                 <td>
@@ -330,7 +332,16 @@ const EventManagement = () => {
                     </tbody>
                 </table>
             </div>
-
+            {!loading && (
+                <div style={{ textAlign: "center", marginTop: "1.5rem", alignContent: 'center' }}>
+                    <button
+                        className="btn-primary"
+                        onClick={() => setVisibleCount(prev => prev + 10)}
+                    >
+                        Load More
+                    </button>
+                </div>
+            )}
             {showDeleteModal && (
                 <div className="modal-overlay" style={{ zIndex: 10000 }}>
                     <div className="modal-content" style={{ maxWidth: '400px', width: '90%' }}>

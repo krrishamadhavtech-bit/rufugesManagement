@@ -1,9 +1,9 @@
 import { API } from "./auth";
 import { NEWS_ENDPOINTS } from "./ApiEndpoints";
 
-export const fetchNews = async () => {
+export const fetchNews = async (page = 1, limit = 10) => {
     try {
-        const response = await API.get(NEWS_ENDPOINTS.LIST);
+        const response = await API.get(`${NEWS_ENDPOINTS.LIST}?page=${page}&limit=${limit}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching news:", error);

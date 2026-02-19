@@ -1,14 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import "./home.css";
-import { fetchCategories } from "../../services/category";
-import family from '../../assets/family.jpg';
-import sunset from '../../assets/sunset.jpg';
-import legal from '../../assets/legal.jpg';
-import house from '../../assets/house.jpg';
-import health from '../../assets/health.jpg';
-import education from '../../assets/education.jpg';
-import job from '../../assets/job.jpg';
+import { fetchCategories } from "../../../services/category";
+import sunset from '../../../assets/sunset.jpg';
+
 
 function Home() {
     const navigate = useNavigate();
@@ -16,6 +11,7 @@ function Home() {
     const [aboutVisible, setAboutVisible] = useState(false);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [visibleCount, setVisibleCount] = useState(2);
 
     // State for animated counters
     const [projects, setProjects] = useState(0);
@@ -34,6 +30,7 @@ function Home() {
                 const response = await fetchCategories();
                 if (response.statusCode === 200) {
                     setCategories(response.data);
+                    setVisibleCount(3);
                 }
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
@@ -278,7 +275,7 @@ function Home() {
                             <p>Loading categories...</p>
                         </div>
                     ) : (
-                        categories.map((category) => (
+                        categories.slice(0, visibleCount).map((category) => (
                             <div
                                 key={category._id}
                                 onClick={() => navigate("/Category", { state: { categoryId: category._id } })}
@@ -306,6 +303,16 @@ function Home() {
                                 </div>
                             </div>
                         ))
+                    )}
+                    {!loading && (
+                        <div style={{ textAlign: "center", marginTop: "1.5rem", alignContent: 'center' }}>
+                            <button
+                                className="btn-primary"
+                                onClick={() => navigate("/CategoryList")}
+                            >
+                                View All
+                            </button>
+                        </div>
                     )}
                 </div>
             </div>

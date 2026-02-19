@@ -1,9 +1,9 @@
 import { API } from "./auth";
 import { CATEGORY_ENDPOINTS, SUB_CATEGORY_ENDPOINTS } from "./ApiEndpoints";
 
-export const fetchCategories = async () => {
+export const fetchCategories = async (page = 1, limit = 10) => {
     try {
-        const response = await API.get(CATEGORY_ENDPOINTS.LIST);
+        const response = await API.get(`${CATEGORY_ENDPOINTS.LIST}?page=${page}&limit=${limit}`);
         return response.data;
     } catch (error) {
         console.error("Error fetching categories:", error);
