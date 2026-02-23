@@ -25,7 +25,7 @@ const AdminDashboard = () => {
                 // Fetch basic entities
                 // Fetch basic entities with large limit for stats
                 const newsRes = await fetchNews(1, 1000);
-                const eventsRes = await fetchEvents(1, 1000);
+                const eventsRes = await fetchEvents();
                 const categoriesRes = await fetchCategories(1, 1000);
 
                 // Robust check for data arrays
@@ -51,7 +51,7 @@ const AdminDashboard = () => {
                     totalContent: news.length + events.length
                 });
 
-               
+
 
                 // Generate last 7 days trend data using local date comparison
                 const last7Days = [];
@@ -95,6 +95,11 @@ const AdminDashboard = () => {
 
             } catch (error) {
                 console.error("Error loading dashboard data:", error);
+                if (!window.hasAlertedDashboardError) {
+                    alert("We had trouble loading your dashboard information. Please refresh the page to try again.");
+                    window.hasAlertedDashboardError = true;
+                    setTimeout(() => window.hasAlertedDashboardError = false, 5000);
+                }
             } finally {
                 setLoading(false);
             }
@@ -118,7 +123,7 @@ const AdminDashboard = () => {
             {/* Stats Cards */}
             <div className="stats-grid">
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#38a9a315', color: '#38a9a3' }}>
+                    <div className="stat-icon" style={{ background: 'var(--primary-muted)', color: 'var(--primary)' }}>
                         <i className="fas fa-newspaper"></i>
                     </div>
                     <div className="stat-content">
@@ -128,7 +133,7 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#517ea815', color: '#517ea8' }}>
+                    <div className="stat-icon" style={{ background: 'var(--secondary-blue)', color: 'var(--white)' }}>
                         <i className="fas fa-calendar-alt"></i>
                     </div>
                     <div className="stat-content">
@@ -138,7 +143,7 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#b86f7a15', color: '#b86f7a' }}>
+                    <div className="stat-icon" style={{ background: 'var(--danger-light)', color: 'var(--danger)' }}>
                         <i className="fas fa-tags"></i>
                     </div>
                     <div className="stat-content">
@@ -148,7 +153,7 @@ const AdminDashboard = () => {
                 </div>
 
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#f5a97f15', color: '#f5a97f' }}>
+                    <div className="stat-icon" style={{ background: 'var(--accent-orange)', color: 'var(--white)' }}>
                         <i className="fas fa-list-ul"></i>
                     </div>
                     <div className="stat-content">
@@ -163,19 +168,19 @@ const AdminDashboard = () => {
                 <h3>Quick Actions</h3>
                 <div className="quick-actions-grid">
                     <div className="quick-action-card" onClick={() => navigate('/admin/news')}>
-                        <div className="quick-action-icon" style={{ background: '#38a9a315', color: '#38a9a3' }}>
+                        <div className="quick-action-icon" style={{ background: 'var(--primary-muted)', color: 'var(--primary)' }}>
                             <i className="fas fa-newspaper"></i>
                         </div>
                         <span className="quick-action-label">Add News</span>
                     </div>
                     <div className="quick-action-card" onClick={() => navigate('/admin/events')}>
-                        <div className="quick-action-icon" style={{ background: '#517ea815', color: '#517ea8' }}>
+                        <div className="quick-action-icon" style={{ background: 'var(--secondary-blue)', color: 'var(--white)' }}>
                             <i className="fas fa-calendar-plus"></i>
                         </div>
                         <span className="quick-action-label">Add Event</span>
                     </div>
                     <div className="quick-action-card" onClick={() => navigate('/admin/categories')}>
-                        <div className="quick-action-icon" style={{ background: '#b86f7a15', color: '#b86f7a' }}>
+                        <div className="quick-action-icon" style={{ background: 'var(--danger-light)', color: 'var(--danger)' }}>
                             <i className="fas fa-folder-plus"></i>
                         </div>
                         <span className="quick-action-label">Manage Categories</span>

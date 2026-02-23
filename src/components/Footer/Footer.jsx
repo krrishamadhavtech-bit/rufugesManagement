@@ -25,7 +25,6 @@ const Footer = () => {
                         <span className="logo-dot">●</span>
                         <span className="logo-text">RAHA</span>
                     </div>
-                    <p>Compassionate Service for All People Everywhere</p>
                 </div>
 
                 <div className="footer-links">

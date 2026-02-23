@@ -323,6 +323,12 @@ body {
     color: var(--primary);
 }
 
+.language-submenu li.active {
+    background: var(--primary-bg);
+    color: var(--primary);
+    font-weight: 700;
+}
+
 /* Responsive adjustments */
 @media (max-width: 1024px) {
     .settings-dropdown {

@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "../style.css";
-
-import { useDispatch } from "react-redux";
-import { logout } from "../../../redux/slices/authSlice";
 import { fetchEvents, addEvent, updateEvent, deleteEvent } from "../../../services/event";
 
 const EventManagement = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [editingId, setEditingId] = useState(null);
     const [eventList, setEventList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
     const [visibleCount, setVisibleCount] = useState(10);
 
-    const handleLogout = () => {
-        dispatch(logout());
-        navigate("/", { replace: true });
-    };
 
     const loadEvents = async () => {
         setLoading(true);
@@ -30,6 +20,11 @@ const EventManagement = () => {
             }
         } catch (error) {
             console.error("Failed to load events:", error);
+            if (!window.hasAlertedEventsError) {
+                alert("We couldn't load the events at this time. Please check your internet connection and try again.");
+                window.hasAlertedEventsError = true;
+                setTimeout(() => window.hasAlertedEventsError = false, 5000);
+            }
         } finally {
             setLoading(false);
         }
@@ -90,10 +85,7 @@ const EventManagement = () => {
             }
         } catch (error) {
             console.error("Submission failed:", error.response?.data || error);
-            const errorMsg = error.response?.data?.errors
-                ? JSON.stringify(error.response.data.errors)
-                : "Failed to save event. Check console for details.";
-            alert(`Submission failed: ${errorMsg}`);
+            alert("We were unable to save the event. Please ensure all details are correct and try again.");
         } finally {
             setSubmitting(false);
         }
@@ -163,7 +155,7 @@ const EventManagement = () => {
             }
         } catch (error) {
             console.error("Delete failed:", error);
-            alert("Failed to delete event.");
+            alert("We encountered an issue while trying to delete the event. Please try again later.");
         } finally {
             setShowDeleteModal(false);
             setDeleteTarget(null);
@@ -188,8 +180,8 @@ const EventManagement = () => {
             </div>
 
             {showForm && (
-                <div className="category-form-card" style={{ marginBottom: '2rem' }}>
-                    <h3 style={{ marginBottom: '1.5rem' }}>{editingId ? 'Edit Event' : 'Create New Event'}</h3>
+                <div className="category-form-card form-card-spaced">
+                    <h3 className="form-card-title">{editingId ? 'Edit Event' : 'Create New Event'}</h3>
                     <form onSubmit={handleSubmit}>
                         <div className="form-row">
                             <div className="form-group">
@@ -304,15 +296,15 @@ const EventManagement = () => {
                     </thead>
                     <tbody>
                         {loading ? (
-                            <tr><td colSpan="7" style={{ textAlign: 'center', padding: '2rem' }}>Loading events...</td></tr>
+                            <tr className="table-empty-row"><td colSpan="7">Loading events...</td></tr>
                         ) : eventList.length === 0 ? (
-                            <tr><td colSpan="7" style={{ textAlign: 'center', padding: '2rem' }}>No events found</td></tr>
+                            <tr className="table-empty-row"><td colSpan="7">No events found</td></tr>
                         ) : eventList.slice(0, visibleCount).map((event, index) => (
                             <tr key={event._id}>
                                 <td>{index + 1}</td>
                                 <td>
                                     <div>{new Date(event.date).toLocaleDateString()}</div>
-                                    <small style={{ color: '#64748b' }}>{event.startTime} - {event.endTime}</small>
+                                    <small className="text-slate">{event.startTime} - {event.endTime}</small>
                                 </td>
                                 <td className="category-name">{event.title?.en}</td>
                                 <td>{event.city}</td>
@@ -332,8 +324,8 @@ const EventManagement = () => {
                     </tbody>
                 </table>
             </div>
-            {!loading && (
-                <div style={{ textAlign: "center", marginTop: "1.5rem", alignContent: 'center' }}>
+            {!loading && eventList.length > 0 && (
+                <div className="pagination-controls-wrapper">
                     <button
                         className="btn-primary"
                         onClick={() => setVisibleCount(prev => prev + 10)}
@@ -343,8 +335,8 @@ const EventManagement = () => {
                 </div>
             )}
             {showDeleteModal && (
-                <div className="modal-overlay" style={{ zIndex: 10000 }}>
-                    <div className="modal-content" style={{ maxWidth: '400px', width: '90%' }}>
+                <div className="modal-overlay modal-high-z">
+                    <div className="modal-content modal-content-small">
                         <div className="modal-header">
                             <h2>Confirm Deletion</h2>
                             <button className="close-btn" onClick={() => setShowDeleteModal(false)}>
@@ -352,10 +344,10 @@ const EventManagement = () => {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <p style={{ marginBottom: '1.5rem' }}>Are you sure you want to delete this event?</p>
+                            <p className="modal-confirm-text">Are you sure you want to delete this event?</p>
                             <div className="form-actions">
                                 <button type="button" className="btn-outline" onClick={() => setShowDeleteModal(false)}>Cancel</button>
-                                <button type="button" className="btn-primary" style={{ backgroundColor: '#dc3545', borderColor: '#dc3545' }} onClick={confirmDelete}>Delete</button>
+                                <button type="button" className="btn-primary btn-danger-bg" onClick={confirmDelete}>Delete</button>
                             </div>
                         </div>
                     </div>

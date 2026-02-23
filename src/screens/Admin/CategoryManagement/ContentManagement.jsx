@@ -1,23 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import "../style.css";
-
-import { useDispatch } from "react-redux";
-import { logout } from "../../../redux/slices/authSlice";
 import { fetchCategories, addCategory, updateCategory, deleteCategory, fetchSubCategories, addSubCategory, updateSubCategory, deleteSubCategory } from "../../../services/category";
 
 const CategoryManagement = () => {
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [editingId, setEditingId] = useState(null);
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [submitting, setSubmitting] = useState(false);
 
-    const handleLogout = () => {
-        dispatch(logout());
-        navigate("/", { replace: true });
-    };
+    // Load More state
+    const [visibleCount, setVisibleCount] = useState(10);
+    const currentCategories = categories.slice(0, visibleCount);
+
 
     const loadCategories = async () => {
         setLoading(true);
@@ -28,6 +22,11 @@ const CategoryManagement = () => {
             }
         } catch (error) {
             console.error("Failed to load categories:", error);
+            if (!window.hasAlertedCategoriesError) {
+                alert("We couldn't load the categories right now. Please try again later.");
+                window.hasAlertedCategoriesError = true;
+                setTimeout(() => window.hasAlertedCategoriesError = false, 5000);
+            }
         } finally {
             setLoading(false);
         }
@@ -79,6 +78,11 @@ const CategoryManagement = () => {
             }
         } catch (error) {
             console.error("Failed to load sub-categories:", error);
+            if (!window.hasAlertedSubCategoriesError) {
+                alert("We couldn't load the sub-categories. Please try again later.");
+                window.hasAlertedSubCategoriesError = true;
+                setTimeout(() => window.hasAlertedSubCategoriesError = false, 5000);
+            }
         } finally {
             setLoadingSubs(false);
         }
@@ -142,7 +146,7 @@ const CategoryManagement = () => {
             });
         } catch (error) {
             console.error("Failed to add sub-category:", error);
-            alert("Failed to add sub-category.");
+            alert("We couldn't save the sub-category. Please verify your input and try again.");
         } finally {
             setSubmitting(false);
         }
@@ -205,7 +209,7 @@ const CategoryManagement = () => {
             }
         } catch (error) {
             console.error("Submission failed:", error);
-            alert("Failed to save category. Please try again.");
+            alert("We couldn't save the category. Please check your input and try again.");
         } finally {
             setSubmitting(false);
         }
@@ -246,7 +250,7 @@ const CategoryManagement = () => {
             }
         } catch (error) {
             console.error("Delete failed:", error);
-            alert(`Failed to delete ${deleteTarget.type}.`);
+            alert(`We couldn't delete the ${deleteTarget.type}. Please try again later.`);
         } finally {
             setShowDeleteModal(false);
             setDeleteTarget(null);
@@ -282,7 +286,7 @@ const CategoryManagement = () => {
                     <h1 className="page-title">Category Management</h1>
                     <p className="page-subtitle">Organize your content with categories</p>
                 </div>
-                <div className="header-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
+                <div className="header-actions">
                     <button className="btn-primary" onClick={() => {
                         setEditingId(null);
                         setFormData({
@@ -411,8 +415,8 @@ const CategoryManagement = () => {
             )}
 
             {/* Categories Table */}
-            <div className="table-container">
-                <table className="categories-table">
+            <div className="table-container" >
+                <table className="categories-table" >
                     <thead>
                         <tr>
                             <th>Sr No.</th>
@@ -425,19 +429,19 @@ const CategoryManagement = () => {
                     </thead>
                     <tbody>
                         {loading ? (
-                            <tr><td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>Loading categories...</td></tr>
-                        ) : categories.length === 0 ? (
-                            <tr><td colSpan="5" style={{ textAlign: 'center', padding: '2rem' }}>No categories found</td></tr>
-                        ) : categories.map((category, index) => (
+                            <tr className="table-empty-row"><td colSpan="5">Loading categories...</td></tr>
+                        ) : currentCategories.length === 0 ? (
+                            <tr className="table-empty-row"><td colSpan="5">No categories found</td></tr>
+                        ) : currentCategories.map((category, index) => (
                             <tr key={category._id}>
                                 <td className="category-id">{index + 1}</td>
                                 <td className="category-name">
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                                        {category.icon?.url && <img src={category.icon.url} alt="" style={{ width: '30px', height: '30px', borderRadius: '4px' }} />}
+                                    <div className="category-name-cell">
+                                        {category.icon?.url && <img src={category.icon.url} alt="" className="category-icon-small" />}
                                     </div>
                                 </td>
                                 <td className="category-name">
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                                    <div className="category-name-cell">
                                         {category.name}
                                     </div>
                                 </td>
@@ -471,10 +475,21 @@ const CategoryManagement = () => {
                 </table>
             </div>
 
+            {/* Pagination Controls */}
+            {!loading && currentCategories.length > 0 && (
+                <div className="pagination-controls-wrapper">
+                    <button
+                        className="btn-primary"
+                        onClick={() => setVisibleCount(prev => prev + 10)}
+                    >
+                        Load More
+                    </button>
+                </div>
+            )}
             {/* Category Stats */}
             <div className="category-stats">
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#38a9a315', color: '#38a9a3' }}>
+                    <div className="stat-icon stat-icon-primary">
                         <i className="fas fa-tags"></i>
                     </div>
                     <div>
@@ -483,7 +498,7 @@ const CategoryManagement = () => {
                     </div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#517ea815', color: '#517ea8' }}>
+                    <div className="stat-icon stat-icon-secondary">
                         <i className="fas fa-check-circle"></i>
                     </div>
                     <div>
@@ -492,7 +507,7 @@ const CategoryManagement = () => {
                     </div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#517ea815', color: '#517ea8' }}>
+                    <div className="stat-icon stat-icon-secondary">
                         <i className="fas fa-check-circle"></i>
                     </div>
                     <div>
@@ -501,7 +516,7 @@ const CategoryManagement = () => {
                     </div>
                 </div>
                 <div className="stat-card">
-                    <div className="stat-icon" style={{ background: '#b86f7a15', color: '#b86f7a' }}>
+                    <div className="stat-icon stat-icon-danger">
                         <i className="fas fa-file-alt"></i>
                     </div>
                     <div>
@@ -553,7 +568,7 @@ const CategoryManagement = () => {
                                         <textarea name="content_hi" value={subCategoryFormData.content_hi} onChange={handleSubInputChange} rows="2" required />
                                     </div>
                                 </div>
-                                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
+                                <div className="sub-category-actions">
                                     {editingSubId && (
                                         <button type="button" className="btn-outline" onClick={() => {
                                             setEditingSubId(null);
@@ -575,7 +590,7 @@ const CategoryManagement = () => {
                                 {loadingSubs ? (
                                     <div className="loading-spinner">Loading...</div>
                                 ) : subCategories.length === 0 ? (
-                                    <p style={{ textAlign: 'center', padding: '2rem', color: '#6b7a8c' }}>No sub-categories found.</p>
+                                    <p className="table-empty-message">No sub-categories found.</p>
                                 ) : (
                                     <table className="sub-categories-table">
                                         <thead>
@@ -591,7 +606,7 @@ const CategoryManagement = () => {
                                                 <tr key={sub._id || idx}>
                                                     <td>{idx + 1}</td>
                                                     <td>{sub.name}</td>
-                                                    <td style={{ fontSize: '0.85rem', color: '#6b7a8c' }}>{sub.content}</td>
+                                                    <td className="sub-category-content-cell">{sub.content}</td>
                                                     <td>
                                                         <div className="action-buttons">
                                                             <button className="action-btn edit" onClick={() => handleSubEdit(sub)}>
@@ -615,8 +630,8 @@ const CategoryManagement = () => {
 
             {/* Delete Confirmation Modal */}
             {showDeleteModal && (
-                <div className="modal-overlay" style={{ zIndex: 10000 }}>
-                    <div className="modal-content" style={{ maxWidth: '400px', width: '90%' }}>
+                <div className="modal-overlay modal-high-z">
+                    <div className="modal-content modal-content-small">
                         <div className="modal-header">
                             <h2>Confirm Deletion</h2>
                             <button className="close-btn" onClick={() => setShowDeleteModal(false)}>
@@ -624,7 +639,7 @@ const CategoryManagement = () => {
                             </button>
                         </div>
                         <div className="modal-body">
-                            <p style={{ marginBottom: '1.5rem' }}>
+                            <p className="modal-confirm-text">
                                 Are you sure you want to delete this {deleteTarget?.type}?
                                 {deleteTarget?.type === 'category' && " This will affect all content in this category."}
                             </p>
@@ -632,7 +647,7 @@ const CategoryManagement = () => {
                                 <button type="button" className="btn-outline" onClick={() => setShowDeleteModal(false)}>
                                     Cancel
                                 </button>
-                                <button type="button" className="btn-primary" style={{ backgroundColor: '#dc3545', borderColor: '#dc3545' }} onClick={confirmDelete}>
+                                <button type="button" className="btn-primary btn-danger-bg" onClick={confirmDelete}>
                                     Delete
                                 </button>
                             </div>

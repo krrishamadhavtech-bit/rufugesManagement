@@ -1,4 +1,22 @@
 /* NewsDetail.css */
+
+.news-detail-loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.news-spinner-icon-red {
+    font-size: 2rem;
+    color: var(--news-red);
+}
+
+.news-detail-error {
+    text-align: center;
+    padding: 5rem 2rem;
+}
+
 .news-detail-wrapper {
     max-width: 900px;
     margin: 0 auto;

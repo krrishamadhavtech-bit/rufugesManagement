@@ -2,7 +2,7 @@ import useHeader from "./ViewModal";
 import "./Header.css";
 
 const Header = () => {
-    const { scrolled, activeTab, settingsOpen, settingsRef, navItems, settingsItems, handleNavClick, handleSettingsItemClick, handleLogout, mobileMenuOpen, setMobileMenuOpen, navigate, languageMenuOpen, setLanguageMenuOpen, handleLanguageChange } = useHeader();
+    const { scrolled, activeTab, settingsOpen, settingsRef, navItems, settingsItems, handleNavClick, handleSettingsItemClick, handleLogout, mobileMenuOpen, setMobileMenuOpen, navigate, languageMenuOpen, setLanguageMenuOpen, handleLanguageChange, currentLang } = useHeader();
     return (
         <header className={`site-header ${scrolled ? "scrolled" : ""}`}>
             <div className="header-content">
@@ -78,9 +78,9 @@ const Header = () => {
                                                             <i className="fas fa-chevron-right submenu-arrow"></i>
                                                             {languageMenuOpen && (
                                                                 <ul className="language-submenu">
-                                                                    <li onClick={(e) => { e.stopPropagation(); handleLanguageChange('en'); }}>English</li>
-                                                                    <li onClick={(e) => { e.stopPropagation(); handleLanguageChange('hi'); }}>Hindi</li>
-                                                                    <li onClick={(e) => { e.stopPropagation(); handleLanguageChange('gu'); }}>Gujarati</li>
+                                                                    <li className={currentLang === 'en' ? 'active' : ''} onClick={(e) => { e.stopPropagation(); handleLanguageChange('en'); }}>English</li>
+                                                                    <li className={currentLang === 'hi' ? 'active' : ''} onClick={(e) => { e.stopPropagation(); handleLanguageChange('hi'); }}>Hindi</li>
+                                                                    <li className={currentLang === 'gu' ? 'active' : ''} onClick={(e) => { e.stopPropagation(); handleLanguageChange('gu'); }}>Gujarati</li>
                                                                 </ul>
                                                             )}
                                                         </>

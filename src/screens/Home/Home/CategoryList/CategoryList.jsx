@@ -21,6 +21,11 @@ function CategoryList() {
                 }
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
+                if (!window.hasAlertedCategoryListError) {
+                    alert("We couldn't load the categories right now. Please try again later.");
+                    window.hasAlertedCategoryListError = true;
+                    setTimeout(() => window.hasAlertedCategoryListError = false, 5000);
+                }
             } finally {
                 setLoading(false);
             }

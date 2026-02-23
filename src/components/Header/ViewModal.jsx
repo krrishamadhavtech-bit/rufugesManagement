@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/slices/authSlice";
 import { updateLanguage } from "../../services/auth";
 import "./Header.css";
@@ -9,6 +9,8 @@ const ViewModal = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const dispatch = useDispatch();
+    const user = useSelector((state) => state.auth.user);
+    const currentLang = user?.language || 'en';
     const navItems = ["Home", "About Us", "Contact Us", "News Corner", "Upcoming Events", "Settings"];
     const validTabs = navItems.map(item => item.toLowerCase().replace(/\s+/g, '-'));
 
@@ -27,11 +29,8 @@ const ViewModal = () => {
     // Settings menu items
     const settingsItems = [
         { icon: "fa-globe", label: "Language", action: () => navigate("/onboarding/language") },
-        { icon: "fa-location-dot", label: "Change Location", action: () => navigate("/location") },
-        { icon: "fa-circle-info", label: "About Us", action: () => navigate("/about-us") },
-        { icon: "fa-comment", label: "Feedback", description: "Report problems or suggest improvements", action: () => navigate("/feedback") },
-        { icon: "fa-shield", label: "Privacy Policy", action: () => navigate("/privacy-policy") },
-        { icon: "fa-address-book", label: "Contact Information", action: () => navigate("/contact-us") },
+        { icon: "fa-circle-info", label: "About Us", action: () => navigate("/home#about-us") },
+        { icon: "fa-address-book", label: "Contact Information", action: () => navigate("/home#contact-us") },
     ];
 
     // Close dropdown when clicking outside
@@ -184,8 +183,9 @@ const ViewModal = () => {
         setLanguageMenuOpen,
         handleLanguageChange,
         mobileMenuOpen,
-        setMobileMenuOpen
-    }
+        setMobileMenuOpen,
+        currentLang
+    };
 };
 
 export default ViewModal;

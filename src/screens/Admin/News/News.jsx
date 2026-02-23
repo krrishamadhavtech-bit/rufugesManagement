@@ -30,6 +30,11 @@ const NewsManagement = () => {
             }
         } catch (error) {
             console.error("Failed to load news:", error);
+            if (!window.hasAlertedNewsError) {
+                alert("We couldn't load the news articles right now. Please check your connection and try again.");
+                window.hasAlertedNewsError = true;
+                setTimeout(() => window.hasAlertedNewsError = false, 5000);
+            }
         } finally {
             setLoading(false);
         }
@@ -99,7 +104,7 @@ const NewsManagement = () => {
             }
         } catch (error) {
             console.error("Submission failed:", error);
-            alert("Failed to save news. Please try again.");
+            alert("We were unable to save the news article. Please check the details and try again.");
         } finally {
             setSubmitting(false);
         }
@@ -153,7 +158,7 @@ const NewsManagement = () => {
             }
         } catch (error) {
             console.error("Delete failed:", error);
-            alert("Failed to delete news.");
+            alert("We couldn't delete this news article. Please try again later.");
         } finally {
             setShowDeleteModal(false);
             setDeleteTarget(null);
@@ -383,7 +388,7 @@ const NewsManagement = () => {
                 </table>
 
             </div>
-            {!loading && (
+            {!loading && newsList.length > 0 &&(
                 <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
                     <button
                         className="btn-primary"

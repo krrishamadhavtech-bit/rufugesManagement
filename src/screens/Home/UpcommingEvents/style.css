@@ -1,4 +1,50 @@
 /* UpcomingEvents.css */
+
+.events-loading-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.events-spinner {
+    text-align: center;
+}
+
+.events-spinner i {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.events-loading-text {
+    margin-top: 1rem;
+    color: var(--text-slate);
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.secondary-badge {
+    background: var(--primary-bg) !important;
+    color: var(--primary) !important;
+}
+
+.excerpt-overflow {
+    max-height: 60px;
+    overflow: hidden;
+}
+
+.details-link-text {
+    color: var(--primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.details-arrow-icon {
+    font-size: 0.75rem;
+}
+
 .events-container {
     max-width: 80%;
     margin: auto !important;

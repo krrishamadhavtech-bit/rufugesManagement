@@ -580,6 +580,20 @@ body {
     border: 3px solid var(--primary);
 }
 
+.review-card-wrapper {
+    border: 1px solid var(--border-soft);
+    border-radius: 16px;
+    padding: 24px;
+    background: var(--white);
+    height: 100%;
+}
+
+.home-load-more-wrapper {
+    text-align: center;
+    margin-top: 1.5rem;
+    align-content: center;
+}
+
 .reviewer-info h4 {
     font-size: 1.2rem;
     font-weight: 700;

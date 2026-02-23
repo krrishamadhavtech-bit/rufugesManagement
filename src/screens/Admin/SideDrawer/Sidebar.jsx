@@ -50,7 +50,7 @@ const Sidebar = () => {
                         <span className="user-name">Admin User</span>
                         <span className="user-role">Super Admin</span>
                     </div>
-                    <button className="logout-btn-admin" onClick={handleLogout} title="Logout" style={{ width: '32px', height: '32px', borderRadius: '8px', border: 'none', background: '#fee2e2', color: '#dc2626' }}>
+                    <button className="logout-btn-admin" onClick={handleLogout} title="Logout" style={{ width: '32px', height: '32px', borderRadius: '8px', border: 'none', background: 'var(--danger-light)', color: 'var(--danger)' }}>
                         <i className="fas fa-sign-out-alt" style={{ fontSize: '0.9rem' }}></i>
                     </button>
                 </div>

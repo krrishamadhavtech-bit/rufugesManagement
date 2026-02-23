@@ -37,6 +37,8 @@ function Signup() {
 
     const handleSignup = (e) => {
         e.preventDefault();
+        setValidationError("");
+        dispatch(resetAuthState());
         if (formData.password !== formData.confirmPassword) {
             setValidationError("Passwords do not match!");
             return;

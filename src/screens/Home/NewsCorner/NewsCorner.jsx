@@ -12,7 +12,7 @@ const NewsCorner = () => {
     const [newsArticles, setNewsArticles] = useState([]);
     const [loading, setLoading] = useState(true);
     const [visibleCount, setVisibleCount] = useState(10);
-    
+
 
     const loadNews = async () => {
         setLoading(true);
@@ -24,6 +24,11 @@ const NewsCorner = () => {
             }
         } catch (error) {
             console.error("Failed to fetch news:", error);
+            if (!window.hasAlertedNewsCornerError) {
+                alert("We're currently unable to load the latest news. Please check back later.");
+                window.hasAlertedNewsCornerError = true;
+                setTimeout(() => window.hasAlertedNewsCornerError = false, 5000);
+            }
         } finally {
             setLoading(false);
         }
@@ -42,10 +47,10 @@ const NewsCorner = () => {
 
     if (loading) {
         return (
-            <div className="news-corner-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
+            <div className="news-corner-container news-loading-wrapper">
                 <div className="loading-spinner">
-                    <i className="fas fa-spinner fa-spin" style={{ fontSize: '2rem', color: '#38a9a3' }}></i>
-                    <p style={{ marginTop: '1rem', color: '#64748b' }}>Loading latest news...</p>
+                    <i className="fas fa-spinner fa-spin news-spinner-icon"></i>
+                    <p className="news-loading-text">Loading latest news...</p>
                 </div>
             </div>
         );
@@ -78,22 +83,22 @@ const NewsCorner = () => {
                         </div>
                     </div>
                 ))}
-                
+
             </div>
-      {!loading && (
-                        <div style={{ textAlign: "center", marginTop: "1.5rem" ,alignContent:'center'}}>
-                            <button
-                                className="btn-primary"
-                                onClick={() => setVisibleCount(prev => prev + 10)}
-                            >
-                                Load More
-                            </button>
-                        </div>
-                    )}
+            {!loading && newsArticles.length > 0 && (
+                <div className="news-load-more-wrapper">
+                    <button
+                        className="btn-primary"
+                        onClick={() => setVisibleCount(prev => prev + 10)}
+                    >
+                        Load More
+                    </button>
+                </div>
+            )}
             {newsArticles.length === 0 && !loading && (
-                <div className="no-results" style={{ textAlign: 'center', padding: '4rem 0' }}>
-                    <i className="fas fa-newspaper" style={{ fontSize: '3rem', color: '#cbd5e1', marginBottom: '1rem', display: 'block' }}></i>
-                    <h3>No articles found</h3>
+                <div className="no-results">
+                    <i className="fas fa-newspaper no-news-icon"></i>
+                    <h3>No News found</h3>
                     <p>Check back later for the latest updates.</p>
                 </div>
             )}

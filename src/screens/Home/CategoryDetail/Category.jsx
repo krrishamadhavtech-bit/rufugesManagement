@@ -31,6 +31,11 @@ const Category = () => {
         }
       } catch (error) {
         console.error("Error fetching sub-categories:", error);
+        if (!window.hasAlertedCategoryDetailError) {
+          alert("We couldn't load the details for this category at the moment. Please try again later.");
+          window.hasAlertedCategoryDetailError = true;
+          setTimeout(() => window.hasAlertedCategoryDetailError = false, 5000);
+        }
       } finally {
         setLoading(false);
       }
@@ -167,11 +172,11 @@ const Category = () => {
                       {sub.icon ? (
                         <img src={sub.icon} alt={sub.name} className="section-icon-img" />
                       ) : (
-                        <i className="fas fa-info-circle" style={{ color: '#38a9a3' }}></i>
+                        <i className="fas fa-info-circle" style={{ color: 'var(--primary)' }}></i>
                       )}
                     </div>
                     <div className="title-wrapper">
-                      <span className="section-tag" style={{ color: '#38a9a3' }}>{sub.identifier || 'GUIDE'}</span>
+                      <span className="section-tag" style={{ color: 'var(--primary)' }}>{sub.identifier || 'GUIDE'}</span>
                       <h3>{sub.name}</h3>
                     </div>
                   </div>

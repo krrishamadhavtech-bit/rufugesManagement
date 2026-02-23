@@ -34,6 +34,11 @@ function Home() {
                 }
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
+                if (!window.hasAlertedHomeError) {
+                    alert("We couldn't load the categories right now. Please try again later.");
+                    window.hasAlertedHomeError = true;
+                    setTimeout(() => window.hasAlertedHomeError = false, 5000);
+                }
             } finally {
                 setLoading(false);
             }
@@ -305,7 +310,7 @@ function Home() {
                         ))
                     )}
                     {!loading && (
-                        <div style={{ textAlign: "center", marginTop: "1.5rem", alignContent: 'center' }}>
+                        <div className="home-load-more-wrapper">
                             <button
                                 className="btn-primary"
                                 onClick={() => navigate("/CategoryList")}
@@ -396,7 +401,7 @@ function Home() {
                                                 <i
                                                     key={i}
                                                     className={`fa-${i < review.rating ? 'solid' : 'regular'} fa-star`}
-                                                    style={{ color: i < review.rating ? '#FFB800' : '#CBD5E0' }}
+                                                    style={{ color: i < review.rating ? 'var(--star-active)' : 'var(--star-inactive)' }}
                                                 ></i>
                                             ))}
                                         </div>

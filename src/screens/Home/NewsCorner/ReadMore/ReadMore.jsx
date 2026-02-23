@@ -28,15 +28,15 @@ const ReadMore = () => {
 
     if (loading) {
         return (
-            <div className="news-detail-loading" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-                <i className="fas fa-spinner fa-spin" style={{ fontSize: '2rem', color: '#cc0000' }}></i>
+            <div className="news-detail-loading">
+                <i className="fas fa-spinner fa-spin news-spinner-icon-red"></i>
             </div>
         );
     }
 
     if (!article) {
         return (
-            <div className="news-detail-error" style={{ textAlign: 'center', padding: '5rem 2rem' }}>
+            <div className="news-detail-error">
                 <h2>Article not found</h2>
                 <button className="back-btn" onClick={() => navigate("/news-corner")}>Back to News</button>
             </div>

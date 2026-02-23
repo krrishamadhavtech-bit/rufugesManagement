@@ -122,4 +122,6 @@
     --delete-bg: #dc3545;
     --newsletter-bg-start: #001e3c;
     --newsletter-bg-end: #012b4a;
+    --star-active: #FFB800;
+    --star-inactive: #CBD5E0;
 }

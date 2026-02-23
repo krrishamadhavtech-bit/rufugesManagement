@@ -1,9 +1,9 @@
 import { API } from "./auth";
 import { EVENT_ENDPOINTS } from "./ApiEndpoints";
 
-export const fetchEvents = async (page = 1, limit = 10) => {
+export const fetchEvents = async () => {
     try {
-        const response = await API.get(`${EVENT_ENDPOINTS.LIST}?page=${page}&limit=${limit}`);
+        const response = await API.get(EVENT_ENDPOINTS.LIST);
         return response.data;
     } catch (error) {
         console.error("Error fetching events:", error);

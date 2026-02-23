@@ -49,6 +49,11 @@ const UpcomingEvents = () => {
             }
         } catch (error) {
             console.error("Failed to load events:", error);
+            if (!window.hasAlertedUpcomingEventsError) {
+                alert("We're having trouble loading the upcoming events. Please try again later.");
+                window.hasAlertedUpcomingEventsError = true;
+                setTimeout(() => window.hasAlertedUpcomingEventsError = false, 5000);
+            }
         } finally {
             setLoading(false);
         }
@@ -84,10 +89,10 @@ const UpcomingEvents = () => {
 
     if (loading) {
         return (
-            <div className="events-container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '60vh' }}>
-                <div className="loading-spinner">
-                    <i className="fas fa-spinner fa-spin" style={{ fontSize: '2rem', color: '#38a9a3' }}></i>
-                    <p style={{ marginTop: '1rem', color: '#64748b' }}>Loading upcoming events...</p>
+            <div className="events-loading-wrapper">
+                <div className="events-spinner">
+                    <i className="fas fa-spinner fa-spin"></i>
+                    <p className="events-loading-text">Loading upcoming events...</p>
                 </div>
             </div>
         );
@@ -157,10 +162,10 @@ const UpcomingEvents = () => {
 
                 <div className="events-grid">
                     {filteredEvents.slice(0, visibleCount).map((event) => (
-                        <div key={event._id} className="event-card" onClick={() => handleEventClick(event)} style={{ cursor: 'pointer' }}>
+                        <div key={event._id} className="event-card clickable" onClick={() => handleEventClick(event)}>
                             <div className="event-card-image-wrapper">
                                 <img src={event.image?.url || defaultImage} alt={getLocalized(event, 'title')} className="event-card-image" />
-                                <span className="event-card-category" style={{ background: '#e8f1f0', color: '#38a9a3' }}>
+                                <span className="event-card-category secondary-badge">
                                     <i className="fas fa-calendar"></i>
                                     <span>{event.category || 'Event'}</span>
                                 </span>
@@ -179,32 +184,32 @@ const UpcomingEvents = () => {
                                 <p className="event-card-location">
                                     <i className="fas fa-location-dot"></i> {event.city}
                                 </p>
-                                <div className="event-card-excerpt" style={{ maxHeight: '60px', overflow: 'hidden' }} dangerouslySetInnerHTML={{ __html: getLocalized(event, 'description') }}></div>
+                                <div className="event-card-excerpt excerpt-overflow" dangerouslySetInnerHTML={{ __html: getLocalized(event, 'description') }}></div>
 
                                 <div className="event-card-footer">
                                     <div className="event-card-attendees">
                                         <i className="fas fa-user"></i>
                                         <span>{event.organizerName}</span>
                                     </div>
-                                    <span style={{ color: '#38a9a3', fontSize: '0.85rem', fontWeight: '600' }}>
-                                        Details <i className="fas fa-arrow-right" style={{ fontSize: '0.75rem' }}></i>
+                                    <span className="details-link-text">
+                                        Details <i className="fas fa-arrow-right details-arrow-icon"></i>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     ))}
-                            {!loading && (
-                    <div style={{ textAlign: "center", marginTop: "1.5rem", alignContent: 'center' }}>
-                        <button
-                            className="btn-primary"
-                            onClick={() => setVisibleCount(prev => prev + 10)}
-                        >
-                            Load More
-                        </button>
-                    </div>
-                )}
+                    {!loading && filteredEvents.length > 0 && (
+                        <div className="pagination-controls-wrapper">
+                            <button
+                                className="btn-primary"
+                                onClick={() => setVisibleCount(prev => prev + 10)}
+                            >
+                                Load More
+                            </button>
+                        </div>
+                    )}
                 </div>
-        
+
                 {filteredEvents.length === 0 && (
                     <div className="no-results">
                         <i className="fas fa-calendar-times"></i>
