@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 import "./home.css";
+import Button from "../../../components/Button/Button";
 import { fetchCategories } from "../../../services/category";
 import sunset from '../../../assets/sunset.jpg';
+import { getRecentlyViewed, cacheData, getCachedData, STORAGE_KEYS } from "../../../services/storage";
 
 
 function Home() {
@@ -12,6 +15,16 @@ function Home() {
     const [categories, setCategories] = useState([]);
     const [loading, setLoading] = useState(true);
     const [visibleCount, setVisibleCount] = useState(2);
+    const [recentlyViewed, setRecentlyViewed] = useState([]);
+
+    const user = useSelector((state) => state.auth.user);
+    const currentLang = user?.language || 'en';
+
+    // Helper to get localized content
+    const getLocalized = (obj, field) => {
+        if (!obj || !obj[field]) return "";
+        return obj[field][currentLang] || obj[field]['en'] || "";
+    };
 
     // State for animated counters
     const [projects, setProjects] = useState(0);
@@ -31,10 +44,15 @@ function Home() {
                 if (response.statusCode === 200) {
                     setCategories(response.data);
                     setVisibleCount(3);
+                    cacheData(STORAGE_KEYS.CATEGORIES_CACHE, response.data);
                 }
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
-                if (!window.hasAlertedHomeError) {
+                const cached = getCachedData(STORAGE_KEYS.CATEGORIES_CACHE);
+                if (cached) {
+                    setCategories(cached);
+                    setVisibleCount(3);
+                } else if (!window.hasAlertedHomeError) {
                     alert("We couldn't load the categories right now. Please try again later.");
                     window.hasAlertedHomeError = true;
                     setTimeout(() => window.hasAlertedHomeError = false, 5000);
@@ -44,6 +62,9 @@ function Home() {
             }
         };
         getCategories();
+
+        // Restore history
+        setRecentlyViewed(getRecentlyViewed());
     }, []);
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -267,6 +288,50 @@ function Home() {
                 </div>
             </div>
 
+            {/* Recently Viewed Section */}
+            {recentlyViewed.length > 0 && (
+                <div className="recent-section">
+                    <div className="section-header">
+                        <span className="section-badge">CONTINUE WATCHING</span>
+                        <h2 className="section-title">Recently Viewed</h2>
+                    </div>
+
+                    <div className="recent-grid">
+                        {recentlyViewed.map((item) => (
+                            <div
+                                key={item._id}
+                                className="recent-card clickable"
+                                onClick={() => {
+                                    if (item.type === 'event') {
+                                        navigate('/upcoming-events/ReadMore', { state: { event: item } });
+                                    } else {
+                                        navigate('/news-corner/ReadMore', { state: { news: item } });
+                                    }
+                                }}
+                            >
+                                <div className="recent-image-wrapper">
+                                    <img
+                                        src={item.image?.url || (item.type === 'event' ? "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=400&q=80" : "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=80")}
+                                        alt={getLocalized(item, item.type === 'event' ? 'title' : 'headline')}
+                                    />
+                                    <span className={`recent-badge ${item.type}`}>
+                                        {item.type === 'event' ? 'Event' : 'News'}
+                                    </span>
+                                </div>
+                                <div className="recent-card-info">
+                                    <h4 className="recent-item-title">
+                                        <span dangerouslySetInnerHTML={{ __html: item.type === 'event' ? getLocalized(item, 'title') : getLocalized(item, 'headline') }}></span>
+                                    </h4>
+                                    <span className="recent-date">
+                                        <i className="fas fa-clock"></i> Viewed {new Date(item.viewedAt).toLocaleDateString()}
+                                    </span>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
+
             {/* Impact Categories */}
             <div className="impact-section">
                 <div className="section-header">
@@ -311,12 +376,12 @@ function Home() {
                     )}
                     {!loading && (
                         <div className="home-load-more-wrapper">
-                            <button
-                                className="btn-primary"
+                            <Button
+                                variant="primary"
                                 onClick={() => navigate("/CategoryList")}
                             >
                                 View All
-                            </button>
+                            </Button>
                         </div>
                     )}
                 </div>
@@ -350,9 +415,9 @@ function Home() {
                             </div>
                         </div>
 
-                        <button className="btn-outline" onClick={() => navigate("/about")}>
+                        <Button variant="outline" onClick={() => navigate("/about")}>
                             Read Our Story
-                        </button>
+                        </Button>
                     </div>
 
                     <div className="about-image">
@@ -515,9 +580,9 @@ function Home() {
                                 <textarea id="message" rows="5" placeholder="Tell us more about your inquiry..."></textarea>
                             </div>
 
-                            <button type="submit" className="btn-primary contact-submit-btn">
-                                Send Message <i className="fas fa-paper-plane"></i>
-                            </button>
+                            <Button type="submit" variant="primary" icon="paper-plane" className="contact-submit-btn">
+                                Send Message
+                            </Button>
                         </form>
                     </div>
                 </div>

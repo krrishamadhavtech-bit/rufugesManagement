@@ -40,8 +40,8 @@ function LanguageSelector() {
                             className={`language-button ${selectedLang === lang.code ? "active" : ""}`}
                             onClick={() => setSelectedLang(lang.code)}
                             style={{
-                                border: selectedLang === lang.code ? "2px solid var(--primary)" : "1px solid #ddd",
-                                background: selectedLang === lang.code ? "rgba(56, 169, 163, 0.1)" : "black"
+                                border: selectedLang === lang.code ? "2px solid var(--primary)" : "1px solid var(--border-color)",
+                                background: selectedLang === lang.code ? "var(--primary-muted)" : "var(--black)"
                             }}
                         >
                             {lang.name}

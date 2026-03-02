@@ -2,6 +2,7 @@ import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/slices/authSlice";
+import Button from "../../../components/Button/Button";
 import "./sidebar.css";
 
 const Sidebar = () => {
@@ -50,9 +51,7 @@ const Sidebar = () => {
                         <span className="user-name">Admin User</span>
                         <span className="user-role">Super Admin</span>
                     </div>
-                    <button className="logout-btn-admin" onClick={handleLogout} title="Logout" style={{ width: '32px', height: '32px', borderRadius: '8px', border: 'none', background: 'var(--danger-light)', color: 'var(--danger)' }}>
-                        <i className="fas fa-sign-out-alt" style={{ fontSize: '0.9rem' }}></i>
-                    </button>
+                    <Button variant="logout" icon="sign-out-alt" onClick={handleLogout} title="Logout" />
                 </div>
             </div>
         </aside>

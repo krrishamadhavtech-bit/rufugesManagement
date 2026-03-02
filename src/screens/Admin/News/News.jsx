@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style.css";
+import Button from "../../../components/Button/Button";
 
 import { useDispatch } from "react-redux";
 import { logout } from "../../../redux/slices/authSlice";
@@ -30,10 +31,9 @@ const NewsManagement = () => {
             }
         } catch (error) {
             console.error("Failed to load news:", error);
-            if (!window.hasAlertedNewsError) {
+            if (!window.hasAlertedAdminError) {
                 alert("We couldn't load the news articles right now. Please check your connection and try again.");
-                window.hasAlertedNewsError = true;
-                setTimeout(() => window.hasAlertedNewsError = false, 5000);
+                window.hasAlertedAdminError = true;
             }
         } finally {
             setLoading(false);
@@ -208,8 +208,8 @@ const NewsManagement = () => {
         padding: '2px 8px',
         fontSize: '12px',
         cursor: 'pointer',
-        border: '1px solid #ddd',
-        background: '#f9f9f9',
+        border: '1px solid var(--border-color)',
+        background: 'var(--bg-faint)',
         borderRadius: '3px'
     };
 
@@ -221,12 +221,12 @@ const NewsManagement = () => {
                     <p className="page-subtitle">Organize your News</p>
                 </div>
                 <div className="header-actions" style={{ display: 'flex', gap: '1rem', alignItems: 'center' }}>
-                    <button className="btn-primary" onClick={() => {
+                    <Button variant="primary" icon="plus" onClick={() => {
                         resetForm();
                         setShowForm(!showForm);
                     }}>
-                        <i className="fas fa-plus"></i> New News
-                    </button>
+                        New News
+                    </Button>
                 </div>
             </div>
 
@@ -337,12 +337,12 @@ const NewsManagement = () => {
                         </div>
 
                         <div className="form-actions">
-                            <button type="button" className="btn-outline" onClick={() => setShowForm(false)}>
+                            <Button variant="outline" onClick={() => setShowForm(false)}>
                                 Cancel
-                            </button>
-                            <button disabled={submitting} type="submit" className="btn-primary">
-                                {submitting ? 'Saving...' : (editingId ? 'Update News' : 'Create News')}
-                            </button>
+                            </Button>
+                            <Button type="submit" variant="primary" loading={submitting}>
+                                {editingId ? 'Update News' : 'Create News'}
+                            </Button>
                         </div>
                     </form>
                 </div>
@@ -374,12 +374,8 @@ const NewsManagement = () => {
                                 </td>
                                 <td>
                                     <div className="action-buttons">
-                                        <button className="action-btn edit" onClick={() => handleEdit(news)}>
-                                            <i className="fas fa-edit"></i>
-                                        </button>
-                                        <button type="button" className="action-btn delete" onClick={() => handleDelete(news._id)}>
-                                            <i className="fas fa-trash"></i>
-                                        </button>
+                                        <Button variant="edit" icon="edit" onClick={() => handleEdit(news)} />
+                                        <Button variant="delete" icon="trash" onClick={() => handleDelete(news._id)} />
                                     </div>
                                 </td>
                             </tr>
@@ -388,14 +384,14 @@ const NewsManagement = () => {
                 </table>
 
             </div>
-            {!loading && newsList.length > 0 &&(
+            {!loading && newsList.length > 0 && (
                 <div style={{ textAlign: "center", marginTop: "1.5rem" }}>
-                    <button
-                        className="btn-primary"
+                    <Button
+                        variant="primary"
                         onClick={() => setVisibleCount(prev => prev + 10)}
                     >
                         Load More
-                    </button>
+                    </Button>
                 </div>
             )}
 
@@ -404,15 +400,13 @@ const NewsManagement = () => {
                     <div className="modal-content" style={{ maxWidth: '400px', width: '90%' }}>
                         <div className="modal-header">
                             <h2>Confirm Deletion</h2>
-                            <button className="close-btn" onClick={() => setShowDeleteModal(false)}>
-                                <i className="fas fa-times"></i>
-                            </button>
+                            <Button variant="action" icon="times" className="close-btn" onClick={() => setShowDeleteModal(false)} />
                         </div>
                         <div className="modal-body">
                             <p style={{ marginBottom: '1.5rem' }}>Are you sure you want to delete this news article?</p>
                             <div className="form-actions">
-                                <button type="button" className="btn-outline" onClick={() => setShowDeleteModal(false)}>Cancel</button>
-                                <button type="button" className="btn-primary" style={{ backgroundColor: '#dc3545', borderColor: '#dc3545' }} onClick={confirmDelete}>Delete</button>
+                                <Button variant="outline" onClick={() => setShowDeleteModal(false)}>Cancel</Button>
+                                <Button variant="danger" onClick={confirmDelete}>Delete</Button>
                             </div>
                         </div>
                     </div>

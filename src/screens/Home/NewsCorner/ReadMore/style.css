@@ -80,19 +80,19 @@
 
 /* Google brand colors - kept as-is per brand guidelines */
 .g-blue {
-    color: #4285F4;
+    color: var(--google-blue);
 }
 
 .g-red {
-    color: #EA4335;
+    color: var(--google-red);
 }
 
 .g-yellow {
-    color: #FBBC05;
+    color: var(--google-yellow);
 }
 
 .g-green {
-    color: #34A853;
+    color: var(--google-green);
 }
 
 /* Headline */

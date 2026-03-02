@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../style.css";
+import Button from "../../../components/Button/Button";
 import { fetchEvents, addEvent, updateEvent, deleteEvent } from "../../../services/event";
 
 const EventManagement = () => {
@@ -20,10 +21,9 @@ const EventManagement = () => {
             }
         } catch (error) {
             console.error("Failed to load events:", error);
-            if (!window.hasAlertedEventsError) {
+            if (!window.hasAlertedAdminError) {
                 alert("We couldn't load the events at this time. Please check your internet connection and try again.");
-                window.hasAlertedEventsError = true;
-                setTimeout(() => window.hasAlertedEventsError = false, 5000);
+                window.hasAlertedAdminError = true;
             }
         } finally {
             setLoading(false);
@@ -170,12 +170,12 @@ const EventManagement = () => {
                     <p className="page-subtitle">Schedule and organize community events</p>
                 </div>
                 <div className="header-actions">
-                    <button className="btn-primary" onClick={() => {
+                    <Button variant="primary" icon="plus" onClick={() => {
                         resetForm();
                         setShowForm(!showForm);
                     }}>
-                        <i className="fas fa-plus"></i> New Event
-                    </button>
+                        New Event
+                    </Button>
                 </div>
             </div>
 
@@ -273,10 +273,10 @@ const EventManagement = () => {
                         </div>
 
                         <div className="form-actions">
-                            <button type="button" className="btn-outline" onClick={() => setShowForm(false)}>Cancel</button>
-                            <button disabled={submitting} type="submit" className="btn-primary">
-                                {submitting ? 'Saving...' : (editingId ? 'Update Event' : 'Create Event')}
-                            </button>
+                            <Button variant="outline" onClick={() => setShowForm(false)}>Cancel</Button>
+                            <Button type="submit" variant="primary" loading={submitting}>
+                                {editingId ? 'Update Event' : 'Create Event'}
+                            </Button>
                         </div>
                     </form>
                 </div>
@@ -311,12 +311,8 @@ const EventManagement = () => {
                                 <td>{event.organizerName}</td>
                                 <td>
                                     <div className="action-buttons">
-                                        <button className="action-btn edit" onClick={() => handleEdit(event)}>
-                                            <i className="fas fa-edit"></i>
-                                        </button>
-                                        <button className="action-btn delete" onClick={() => handleDelete(event._id)}>
-                                            <i className="fas fa-trash"></i>
-                                        </button>
+                                        <Button variant="edit" icon="edit" onClick={() => handleEdit(event)} />
+                                        <Button variant="delete" icon="trash" onClick={() => handleDelete(event._id)} />
                                     </div>
                                 </td>
                             </tr>
@@ -326,12 +322,12 @@ const EventManagement = () => {
             </div>
             {!loading && eventList.length > 0 && (
                 <div className="pagination-controls-wrapper">
-                    <button
-                        className="btn-primary"
+                    <Button
+                        variant="primary"
                         onClick={() => setVisibleCount(prev => prev + 10)}
                     >
                         Load More
-                    </button>
+                    </Button>
                 </div>
             )}
             {showDeleteModal && (
@@ -339,15 +335,13 @@ const EventManagement = () => {
                     <div className="modal-content modal-content-small">
                         <div className="modal-header">
                             <h2>Confirm Deletion</h2>
-                            <button className="close-btn" onClick={() => setShowDeleteModal(false)}>
-                                <i className="fas fa-times"></i>
-                            </button>
+                            <Button variant="action" icon="times" className="close-btn" onClick={() => setShowDeleteModal(false)} />
                         </div>
                         <div className="modal-body">
                             <p className="modal-confirm-text">Are you sure you want to delete this event?</p>
                             <div className="form-actions">
-                                <button type="button" className="btn-outline" onClick={() => setShowDeleteModal(false)}>Cancel</button>
-                                <button type="button" className="btn-primary btn-danger-bg" onClick={confirmDelete}>Delete</button>
+                                <Button variant="outline" onClick={() => setShowDeleteModal(false)}>Cancel</Button>
+                                <Button variant="danger" onClick={confirmDelete}>Delete</Button>
                             </div>
                         </div>
                     </div>

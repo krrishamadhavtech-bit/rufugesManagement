@@ -1059,7 +1059,7 @@ input:checked+.toggle-slider:before {
 }
 
 .sidebar-btn.duplicate:hover {
-    background: #e3f2fd;
+    background: var(--secondary-blue-light);
     border-color: var(--secondary-blue);
     color: var(--secondary-blue);
 }
@@ -1557,7 +1557,7 @@ input:checked+.toggle-slider:before {
 }
 
 .sidebar-btn.duplicate:hover {
-    background: #e3f2fd;
+    background: var(--secondary-blue-light);
     border-color: var(--secondary-blue);
     color: var(--secondary-blue);
 }

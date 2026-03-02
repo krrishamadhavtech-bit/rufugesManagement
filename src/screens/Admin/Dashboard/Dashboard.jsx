@@ -95,10 +95,9 @@ const AdminDashboard = () => {
 
             } catch (error) {
                 console.error("Error loading dashboard data:", error);
-                if (!window.hasAlertedDashboardError) {
+                if (!window.hasAlertedAdminError) {
                     alert("We had trouble loading your dashboard information. Please refresh the page to try again.");
-                    window.hasAlertedDashboardError = true;
-                    setTimeout(() => window.hasAlertedDashboardError = false, 5000);
+                    window.hasAlertedAdminError = true;
                 }
             } finally {
                 setLoading(false);
@@ -108,7 +107,16 @@ const AdminDashboard = () => {
         loadDashboardData();
     }, []);
 
-    const COLORS = ['#38a9a3', '#517ea8', '#b86f7a', '#5c8d7f', '#f5a97f', '#8884d8', '#82ca9d', '#ffc658'];
+    const COLORS = [
+        'var(--chart-1)',
+        'var(--chart-2)',
+        'var(--chart-3)',
+        'var(--chart-4)',
+        'var(--chart-5)',
+        'var(--chart-6)',
+        'var(--chart-7)',
+        'var(--chart-8)'
+    ];
 
 
     return (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "../style.css";
+import Button from "../../../components/Button/Button";
 import { fetchCategories, addCategory, updateCategory, deleteCategory, fetchSubCategories, addSubCategory, updateSubCategory, deleteSubCategory } from "../../../services/category";
 
 const CategoryManagement = () => {
@@ -22,10 +23,9 @@ const CategoryManagement = () => {
             }
         } catch (error) {
             console.error("Failed to load categories:", error);
-            if (!window.hasAlertedCategoriesError) {
+            if (!window.hasAlertedAdminError) {
                 alert("We couldn't load the categories right now. Please try again later.");
-                window.hasAlertedCategoriesError = true;
-                setTimeout(() => window.hasAlertedCategoriesError = false, 5000);
+                window.hasAlertedAdminError = true;
             }
         } finally {
             setLoading(false);
@@ -78,10 +78,9 @@ const CategoryManagement = () => {
             }
         } catch (error) {
             console.error("Failed to load sub-categories:", error);
-            if (!window.hasAlertedSubCategoriesError) {
+            if (!window.hasAlertedAdminError) {
                 alert("We couldn't load the sub-categories. Please try again later.");
-                window.hasAlertedSubCategoriesError = true;
-                setTimeout(() => window.hasAlertedSubCategoriesError = false, 5000);
+                window.hasAlertedAdminError = true;
             }
         } finally {
             setLoadingSubs(false);
@@ -287,7 +286,7 @@ const CategoryManagement = () => {
                     <p className="page-subtitle">Organize your content with categories</p>
                 </div>
                 <div className="header-actions">
-                    <button className="btn-primary" onClick={() => {
+                    <Button variant="primary" icon="plus" onClick={() => {
                         setEditingId(null);
                         setFormData({
                             name_en: "",
@@ -301,8 +300,8 @@ const CategoryManagement = () => {
                         });
                         setShowForm(!showForm);
                     }}>
-                        <i className="fas fa-plus"></i> New Category
-                    </button>
+                        New Category
+                    </Button>
                 </div>
             </div>
 
@@ -403,12 +402,12 @@ const CategoryManagement = () => {
                         </div>
 
                         <div className="form-actions">
-                            <button type="button" className="btn-outline" onClick={() => setShowForm(false)}>
+                            <Button variant="outline" onClick={() => setShowForm(false)}>
                                 Cancel
-                            </button>
-                            <button disabled={submitting} type="submit" className="btn-primary">
-                                {submitting ? 'Saving...' : (editingId ? 'Update Category' : 'Create Category')}
-                            </button>
+                            </Button>
+                            <Button type="submit" variant="primary" loading={submitting}>
+                                {editingId ? 'Update Category' : 'Create Category'}
+                            </Button>
                         </div>
                     </form>
                 </div>
@@ -458,15 +457,9 @@ const CategoryManagement = () => {
                                 </td>
                                 <td>
                                     <div className="action-buttons">
-                                        <button className="action-btn sub" onClick={() => handleOpenSubModal(category)} title="Manage Subcategories">
-                                            <i className="fas fa-list-ul"></i>
-                                        </button>
-                                        <button className="action-btn edit" onClick={() => handleEdit(category)}>
-                                            <i className="fas fa-edit"></i>
-                                        </button>
-                                        <button type="button" className="action-btn delete" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDelete(category._id); }}>
-                                            <i className="fas fa-trash"></i>
-                                        </button>
+                                        <Button variant="sub" icon="list-ul" onClick={() => handleOpenSubModal(category)} title="Manage Subcategories" />
+                                        <Button variant="edit" icon="edit" onClick={() => handleEdit(category)} title="Edit" />
+                                        <Button variant="delete" icon="trash" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleDelete(category._id); }} title="Delete" />
                                     </div>
                                 </td>
                             </tr>
@@ -478,12 +471,12 @@ const CategoryManagement = () => {
             {/* Pagination Controls */}
             {!loading && currentCategories.length > 0 && (
                 <div className="pagination-controls-wrapper">
-                    <button
-                        className="btn-primary"
+                    <Button
+                        variant="primary"
                         onClick={() => setVisibleCount(prev => prev + 10)}
                     >
                         Load More
-                    </button>
+                    </Button>
                 </div>
             )}
             {/* Category Stats */}
@@ -531,9 +524,7 @@ const CategoryManagement = () => {
                     <div className="modal-content">
                         <div className="modal-header">
                             <h2>Manage Sub-categories: {selectedCategory?.name}</h2>
-                            <button className="close-btn" onClick={handleCloseSubModal}>
-                                <i className="fas fa-times"></i>
-                            </button>
+                            <Button variant="action" icon="times" className="close-btn" onClick={handleCloseSubModal} />
                         </div>
 
                         <div className="modal-body">
@@ -570,17 +561,17 @@ const CategoryManagement = () => {
                                 </div>
                                 <div className="sub-category-actions">
                                     {editingSubId && (
-                                        <button type="button" className="btn-outline" onClick={() => {
+                                        <Button variant="outline" onClick={() => {
                                             setEditingSubId(null);
                                             setSubCategoryFormData({
                                                 name_en: "", name_hi: "", name_gu: "",
                                                 content_en: "", content_hi: "", content_gu: ""
                                             });
-                                        }}>Cancel Edit</button>
+                                        }}>Cancel Edit</Button>
                                     )}
-                                    <button disabled={submitting} type="submit" className="btn-primary">
-                                        {submitting ? 'Saving...' : (editingSubId ? 'Update Sub-category' : 'Add Sub-category')}
-                                    </button>
+                                    <Button type="submit" variant="primary" loading={submitting}>
+                                        {editingSubId ? 'Update Sub-category' : 'Add Sub-category'}
+                                    </Button>
                                 </div>
                             </form>
 
@@ -609,12 +600,8 @@ const CategoryManagement = () => {
                                                     <td className="sub-category-content-cell">{sub.content}</td>
                                                     <td>
                                                         <div className="action-buttons">
-                                                            <button className="action-btn edit" onClick={() => handleSubEdit(sub)}>
-                                                                <i className="fas fa-edit"></i>
-                                                            </button>
-                                                            <button type="button" className="action-btn delete" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleSubDelete(sub._id); }}>
-                                                                <i className="fas fa-trash"></i>
-                                                            </button>
+                                                            <Button variant="edit" icon="edit" onClick={() => handleSubEdit(sub)} />
+                                                            <Button variant="delete" icon="trash" onClick={(e) => { e.preventDefault(); e.stopPropagation(); handleSubDelete(sub._id); }} />
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -634,9 +621,7 @@ const CategoryManagement = () => {
                     <div className="modal-content modal-content-small">
                         <div className="modal-header">
                             <h2>Confirm Deletion</h2>
-                            <button className="close-btn" onClick={() => setShowDeleteModal(false)}>
-                                <i className="fas fa-times"></i>
-                            </button>
+                            <Button variant="action" icon="times" className="close-btn" onClick={() => setShowDeleteModal(false)} />
                         </div>
                         <div className="modal-body">
                             <p className="modal-confirm-text">
@@ -644,12 +629,12 @@ const CategoryManagement = () => {
                                 {deleteTarget?.type === 'category' && " This will affect all content in this category."}
                             </p>
                             <div className="form-actions">
-                                <button type="button" className="btn-outline" onClick={() => setShowDeleteModal(false)}>
+                                <Button variant="outline" onClick={() => setShowDeleteModal(false)}>
                                     Cancel
-                                </button>
-                                <button type="button" className="btn-primary btn-danger-bg" onClick={confirmDelete}>
+                                </Button>
+                                <Button variant="danger" onClick={confirmDelete}>
                                     Delete
-                                </button>
+                                </Button>
                             </div>
                         </div>
                     </div>

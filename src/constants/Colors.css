@@ -13,12 +13,14 @@
     --secondary-dark: #001E3C;
     --secondary-light: #2C4C5C;
     --secondary-blue: #517ea8;
+    --secondary-blue-light: #e3f2fd;
 
     /* ===== ACCENT / DANGER ===== */
     --accent: #013A6B;
     --danger: #b86f7a;
     --danger-light: #fef2f2;
     --danger-border: #b86f7a;
+    --danger-dark: #c82333;
 
     /* ===== NEUTRALS ===== */
     --white: #FFFFFF;
@@ -32,6 +34,8 @@
     --text-muted: #94a3b8;
     --text-slate: #64748b;
     --text-dim: #829eab;
+    --text-darker: #0f172a;
+    --text-main: #334155;
 
     /* ===== NEWS / MEDIA ===== */
     --news-red: #cc0000;
@@ -39,6 +43,7 @@
     --news-gray: #666;
     --news-light-gray: #ccc;
     --news-icon-red: #ff3b3b;
+    --news-badge: #FF5E5E;
 
     /* ===== BORDERS ===== */
     --border-light: rgba(225, 235, 240, 0.8);
@@ -124,4 +129,20 @@
     --newsletter-bg-end: #012b4a;
     --star-active: #FFB800;
     --star-inactive: #CBD5E0;
+
+    /* ===== CHART PALETTE ===== */
+    --chart-1: #38a9a3;
+    --chart-2: #517ea8;
+    --chart-3: #b86f7a;
+    --chart-4: #5c8d7f;
+    --chart-5: #f5a97f;
+    --chart-6: #8884d8;
+    --chart-7: #82ca9d;
+    --chart-8: #ffc658;
+
+    /* ===== BRAND COLORS ===== */
+    --google-blue: #4285F4;
+    --google-red: #EA4335;
+    --google-yellow: #FBBC05;
+    --google-green: #34A853;
 }

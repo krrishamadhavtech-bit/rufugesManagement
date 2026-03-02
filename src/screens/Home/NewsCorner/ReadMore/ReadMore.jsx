@@ -3,6 +3,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./style.css";
 
+import { saveToRecentlyViewed, cacheData, getCachedData, STORAGE_KEYS } from "../../../../services/storage";
+
 const ReadMore = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -14,9 +16,19 @@ const ReadMore = () => {
 
     useEffect(() => {
         if (location.state?.news) {
-            setArticle(location.state.news);
+            const newsData = location.state.news;
+            setArticle(newsData);
             setLoading(false);
+
+            // Save for offline support & history
+            saveToRecentlyViewed(newsData, 'news');
+            if (newsData._id) {
+                cacheData(`${STORAGE_KEYS.LAST_NEWS_VIEWED}_${newsData._id}`, newsData);
+            }
         } else {
+            // Restore last viewed news as fallback
+            const cached = getCachedData(STORAGE_KEYS.LAST_NEWS_VIEWED);
+            if (cached) setArticle(cached);
             setLoading(false);
         }
     }, [location.state]);

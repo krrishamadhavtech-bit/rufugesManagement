@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import "./style.css";
 import { fetchEvents } from "../../../services/event";
 
+import { cacheData, getCachedData, STORAGE_KEYS } from "../../../services/storage";
+
 const UpcomingEvents = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
@@ -43,13 +45,20 @@ const UpcomingEvents = () => {
         try {
             const response = await fetchEvents();
             if (response.statusCode === 200) {
-                // Filter only active events
-                setEvents(response.data.filter(e => e.isActive !== false));
+                const activeEvents = response.data.filter(e => e.isActive !== false);
+                setEvents(activeEvents);
                 setVisibleCount(10);
+                // Cache the list for offline
+                cacheData(STORAGE_KEYS.EVENTS_CACHE, activeEvents);
             }
         } catch (error) {
             console.error("Failed to load events:", error);
-            if (!window.hasAlertedUpcomingEventsError) {
+            // Offline fallback
+            const cached = getCachedData(STORAGE_KEYS.EVENTS_CACHE);
+            if (cached) {
+                setEvents(cached);
+                setVisibleCount(10);
+            } else if (!window.hasAlertedUpcomingEventsError) {
                 alert("We're having trouble loading the upcoming events. Please try again later.");
                 window.hasAlertedUpcomingEventsError = true;
                 setTimeout(() => window.hasAlertedUpcomingEventsError = false, 5000);

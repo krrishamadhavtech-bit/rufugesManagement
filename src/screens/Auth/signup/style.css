@@ -124,7 +124,7 @@
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.25);
-    color: white;
+    color: var(--white);
     transition: 0.3s ease;
 }
 
@@ -140,7 +140,7 @@
 }
 
 .password-toggle:hover {
-    color: white !important;
+    color: var(--white) !important;
 }
 
 /* CHANGE ICON COLOR ON FOCUS */
@@ -156,7 +156,7 @@
     border-radius: 50px;
     border: 1px solid rgba(255, 255, 255, 0.3);
     background: rgba(255, 255, 255, 0.25);
-    color: white;
+    color: var(--white);
     appearance: none;
     -webkit-appearance: none;
     outline: none;
@@ -166,7 +166,7 @@
 
 .signup-card select option {
     background: var(--secondary);
-    color: white;
+    color: var(--white);
 }
 
 .signup-card select:focus {

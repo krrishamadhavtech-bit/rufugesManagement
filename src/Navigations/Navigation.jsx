@@ -106,10 +106,10 @@ function Navigation() {
                     <Route path="/upcoming-events/ReadMore" element={<ProtectedRoute><EventReadMore /></ProtectedRoute>} />
 
                     {/* Admin Routes */}
-                    <Route path="/admin/dashboard" element={<AdminRoute><AdminLayout><AdminDashboard /></AdminLayout></AdminRoute>} />
-                    <Route path="/admin/categories" element={<AdminRoute><AdminLayout><AdminCategoryManagement /></AdminLayout></AdminRoute>} />
-                    <Route path="/admin/news" element={<AdminRoute><AdminLayout><NewsManagement /></AdminLayout></AdminRoute>} />
-                    <Route path="/admin/events" element={<AdminRoute><AdminLayout><EventManagement /></AdminLayout></AdminRoute>} />
+                    <Route path="/admin/dashboard" element={<AdminLayout><AdminDashboard /></AdminLayout>} />
+                    <Route path="/admin/categories" element={<AdminLayout><AdminCategoryManagement /></AdminLayout>} />
+                    <Route path="/admin/news" element={<AdminLayout><NewsManagement /></AdminLayout>} />
+                    <Route path="/admin/events" element={<AdminLayout><EventManagement /></AdminLayout>} />
                 </Routes>
             </Layout>
         </BrowserRouter>

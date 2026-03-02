@@ -3,6 +3,8 @@ import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import "./style.css";
 
+import { saveToRecentlyViewed, cacheData, getCachedData, STORAGE_KEYS } from "../../../../services/storage";
+
 const EventReadMore = () => {
     const navigate = useNavigate();
     const location = useLocation();
@@ -17,10 +19,19 @@ const EventReadMore = () => {
 
     useEffect(() => {
         if (location.state?.event) {
-            setEvent(location.state.event);
+            const eventData = location.state.event;
+            setEvent(eventData);
             setLoading(false);
+
+            // Save for offline support & history
+            saveToRecentlyViewed(eventData, 'event');
+            cacheData(`${STORAGE_KEYS.LAST_EVENT_VIEWED}_${id}`, eventData);
         } else {
-            // In a real app, you might fetch by ID here if state is missing
+            // Restore from cache if possible
+            const cached = getCachedData(`${STORAGE_KEYS.LAST_EVENT_VIEWED}_${id}`);
+            if (cached) {
+                setEvent(cached);
+            }
             setLoading(false);
         }
     }, [id, location.state]);

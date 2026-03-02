@@ -4,6 +4,8 @@ import { useSelector } from "react-redux";
 import "./style.css";
 import { fetchNews } from "../../../services/news";
 
+import { cacheData, getCachedData, STORAGE_KEYS } from "../../../services/storage";
+
 const NewsCorner = () => {
     const navigate = useNavigate();
     const user = useSelector((state) => state.auth.user);
@@ -19,12 +21,18 @@ const NewsCorner = () => {
         try {
             const response = await fetchNews();
             if (response.statusCode === 200) {
-                setNewsArticles(response.data.filter(item => item.active !== false));
+                const activeNews = response.data.filter(item => item.active !== false);
+                setNewsArticles(activeNews);
                 setVisibleCount(10);
+                cacheData(STORAGE_KEYS.NEWS_CACHE, activeNews);
             }
         } catch (error) {
             console.error("Failed to fetch news:", error);
-            if (!window.hasAlertedNewsCornerError) {
+            const cached = getCachedData(STORAGE_KEYS.NEWS_CACHE);
+            if (cached) {
+                setNewsArticles(cached);
+                setVisibleCount(10);
+            } else if (!window.hasAlertedNewsCornerError) {
                 alert("We're currently unable to load the latest news. Please check back later.");
                 window.hasAlertedNewsCornerError = true;
                 setTimeout(() => window.hasAlertedNewsCornerError = false, 5000);

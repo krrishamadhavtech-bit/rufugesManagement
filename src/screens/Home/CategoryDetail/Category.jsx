@@ -3,12 +3,15 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { fetchSubCategories } from "../../../services/category";
 import "./style.css";
 
+import { cacheData, getCachedData, STORAGE_KEYS } from "../../../services/storage";
+
 // Assume these icons are from your CDN (Font Awesome)
 const Category = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const categoryId = location.state?.categoryId;
   const [subCategories, setSubCategories] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const [activeSection, setActiveSection] = useState(null);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
@@ -19,6 +22,7 @@ const Category = () => {
 
   useEffect(() => {
     const getSubCategories = async () => {
+      const cacheKey = `${STORAGE_KEYS.CATEGORIES_CACHE}_SUB_${categoryId}`;
       if (!categoryId) {
         setLoading(false);
         return;
@@ -27,11 +31,14 @@ const Category = () => {
         const response = await fetchSubCategories(categoryId);
         if (response.success) {
           setSubCategories(response.data);
-          setSubCategories(response.data);
+          cacheData(cacheKey, response.data);
         }
       } catch (error) {
         console.error("Error fetching sub-categories:", error);
-        if (!window.hasAlertedCategoryDetailError) {
+        const cached = getCachedData(cacheKey);
+        if (cached) {
+          setSubCategories(cached);
+        } else if (!window.hasAlertedCategoryDetailError) {
           alert("We couldn't load the details for this category at the moment. Please try again later.");
           window.hasAlertedCategoryDetailError = true;
           setTimeout(() => window.hasAlertedCategoryDetailError = false, 5000);
@@ -168,7 +175,7 @@ const Category = () => {
               >
                 <div className="section-header-elegant">
                   <div className="section-title-elegant">
-                    <div className="section-icon-wrapper" style={{ background: '#38a9a315' }}>
+                    <div className="section-icon-wrapper" style={{ background: 'var(--primary-muted)' }}>
                       {sub.icon ? (
                         <img src={sub.icon} alt={sub.name} className="section-icon-img" />
                       ) : (

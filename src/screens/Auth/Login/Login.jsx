@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 import loginBg from "../../../assets/homepage.jpg";
+import Button from "../../../components/Button/Button";
 import useViewModal from "./Login.ViewModal";
 
 function Login() {
@@ -54,9 +55,9 @@ function Login() {
 
                     {error && <p className="error-message">{error}</p>}
 
-                    <button type="submit" disabled={loading}>
-                        {loading ? "Logging in..." : "Login"}
-                    </button>
+                    <Button type="submit" variant="primary" loading={loading} style={{ width: '100%', marginTop: '1rem' }}>
+                        Login
+                    </Button>
                 </form>
 
                 <span className="signup-footer">
